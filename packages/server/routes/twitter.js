@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Twitter = require('twitter-v2');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
