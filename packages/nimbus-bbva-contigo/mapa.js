@@ -3,7 +3,7 @@
                 sens = 0.25,
                 focused;
             var countries;
-            
+
             var projection = d3.geo.orthographic()
                             .scale(100)
                             .rotate([0, 0])
@@ -17,7 +17,7 @@
             var svg = d3.select("#d3_globe").append("svg")
                 .attr("width", width)
                 .attr("height", height);
-            
+
             svg.append("path")
                 .datum({type: "Sphere"})
                 .attr("class", "water")
@@ -41,14 +41,14 @@
 
 
 
-        
-        
+
+
         function setCountry(id_country,color){
             var rotate = projection.rotate(),
             focusedCountry = country(countries, id_country),
             p = d3.geo.centroid(focusedCountry);
             svg.selectAll(".focused").classed("focused", focused = false);
-    
+
             (function transition() {
                 d3.transition()
                 .duration(2500)
@@ -59,19 +59,19 @@
                         svg.selectAll("path").attr("d", path)
                             .classed("focused", function(d, i) { return d.id == focusedCountry.id ? focused = d : false; })
                             .style("fill", function(d, i) { return d.id == focusedCountry.id ? color : false; });
-                            
+
                     };
                 })
             })();
         }
-        
+
         function unsetCountry(){
             svg.selectAll("path").attr("d", path)
                 .classed("focused", false)
                 .style("fill", "#2C1E3D");
         }
-        
-        function country(cnt, sel) { 
+
+        function country(cnt, sel) {
             for(var i = 0, l = cnt.length; i < l; i++) {
                 if(cnt[i].id == sel) {return cnt[i];}
             }
