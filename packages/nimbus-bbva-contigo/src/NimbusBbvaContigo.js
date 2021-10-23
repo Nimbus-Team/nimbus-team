@@ -124,27 +124,27 @@ export class NimbusBbvaContigo extends LitElement {
     // this.socket.emit('request-suggestion','es');
   }
 
-  // setTweets(){
-  //   fetch('./25c354bf.json')
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     let twitter = '';
-  //     data.forEach(item => {
-  //       let f = new Date(item.tweet.created_at);
-  //       twitter += `
-  //         <div class="tweet">
-  //           <div class="icon"></div>
-  //           <div class="tweetTexto">
-  //             <p class="texto">${item.tweet.text}</p>
-  //             <p class="fecha">${f.toLocaleDateString('en-US')}</p>
-  //           </div>
-  //         </div>`;
-  //     });
-  //     console.log(twitter);
-  //     document.getElementById('tweetContainer').innerHTML = twitter;
+  setTweets(){
+    fetch('./25c354bf.json')
+    .then(response => response.json())
+    .then(data => {
+      let twitter = '';
+      data.forEach(item => {
+        let f = new Date(item.tweet.created_at);
+        twitter += `
+          <div class="tweet">
+            <div class="icon"></div>
+            <div class="tweetTexto">
+              <p class="texto">${item.tweet.text}</p>
+              <p class="fecha">${f.toLocaleDateString('en-US')}</p>
+            </div>
+          </div>`;
+      });
+      console.log(twitter);
+      document.getElementById('tweetContainer').innerHTML = twitter;
 
-  //   });
-  // }
+    });
+  }
 
   createRenderRoot() {
     return this;

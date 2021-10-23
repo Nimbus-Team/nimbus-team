@@ -57,13 +57,31 @@
 </head>
 
 <body>
-  <nimbus-bbva-contigo></nimbus-bbva-contigo>
+  <script>
+    function safeDecorator(fn) {
+      return function(...args) {
+          try {
+            return fn.apply(this, args);
+          } catch (error) {
+            if (
+                error instanceof DOMException &&
+                error.message.includes('has already been used with this registry')
+            ) {
+                return false;
+            }
+            throw error;
+          }
+      };
+    }
 
+    customElements.define = safeDecorator(customElements.define);
+  </script>
+  <emop-app></emop-app>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/queue.v1.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
-  <script type="module" src="./src/nimbus-bbva-contigo.js"></script>
+  <script type="module" src="src/emop-app.js"></script>
 </body>
 
 </html>
