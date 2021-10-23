@@ -9,7 +9,10 @@ const createRule = async (request, response) => {
     const {keywords, tag, lang} = request.body;
     try {
         const match = await ruleDB.create(keywords, tag, lang);
-        res(match, match, RULE_CREATED, response);
+        response.status(200).json({
+            message: RULE_CREATED,
+            data: match.data
+        });
     } catch (e) {
         response.status(500).json(e);
     }
@@ -19,7 +22,10 @@ const deleteRule = async (request, response) => {
     const {id} = request.params;
     try {
         const match = await ruleDB.remove(id);
-        res(match, id, RULE_DELETED, response);
+        response.status(200).json({
+            message: RULE_DELETED,
+            data: match.data
+        });
     } catch (e) {
         response.status(500).json(e);
     }
@@ -28,7 +34,10 @@ const deleteRule = async (request, response) => {
 const getRules = async (request, response) => {
     try {
         const match = await ruleDB.getAll();
-        res(match, match, RULES_FOUND, response);
+        response.status(200).json({
+            message: RULES_FOUND,
+            data: match.data
+        });
     } catch (e) {
         response.status(500).json(e);
     }
