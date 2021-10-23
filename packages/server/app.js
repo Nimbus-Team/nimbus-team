@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const Twitter = require('twitter-v2');
+const getReport = require('./analyzer/reporter');
 
 const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
@@ -18,6 +19,7 @@ const countryController = require('./services/countries');
 const clientController = require('./services/clients');
 const categoryController = require('./services/categories');
 const actionController = require('./services/actions');
+const twitterRuleController = require('./services/twitter_rules');
 
 // Countries
 
@@ -68,6 +70,16 @@ actionRouter.put('/:code/category', actionController.addCategory);
 actionRouter.delete('/:code/category', actionController.removeCategory);
 
 app.use('/actions', actionRouter);
+
+// Twitter rules
+
+const twitterRulerRouter = express.Router();
+
+twitterRulerRouter.post('/create', twitterRuleController.createRule);
+twitterRulerRouter.post('/remove', twitterRuleController.deleteRule);
+twitterRulerRouter.get('/', twitterRuleController.getRules);
+
+app.use('/rules', twitterRulerRouter);
 
 // Sockets
 
@@ -261,19 +273,21 @@ io.on('connection', async (socket) => {
             socket.emit('tweet', _itemTweet);
         }
 
-        // TODO Analyze data
-
         const _suggestions = new Map();
 
         for (const category of categories) {
+            const tweets = _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category));
             _suggestions.set(category, {
                 action: actions.get(country_code.toLowerCase()).get(category)[1],
-                emotions: [],
-                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category))
+                tweets,
+                report: getReport(tweets, 10)
             });
         }
 
-        socket.emit('suggestions', {suggestions: Array.from(_suggestions, ([category, suggestion]) => ({ category, suggestion })), counter: _tweetsBuffer.length});
+        socket.emit('suggestions', {
+            suggestions: Array.from(_suggestions, ([category, suggestion]) => ({ category, suggestion })),
+            counter: _tweetsBuffer.length
+        });
     });
 });
 
