@@ -1,4 +1,4 @@
-FROM node:12.22.7-buster
+FROM --platform=linux/amd64 node:12.22.7-buster
 
 WORKDIR /usr/src/app
 
