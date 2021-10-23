@@ -4508,5 +4508,5 @@ module.exports = {
         "fanático": -2,
         "fanáticos": -2,
         "celosos": 2
-    },
+    }
 };
