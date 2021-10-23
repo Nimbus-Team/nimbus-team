@@ -29,7 +29,7 @@ io.on('connection', async (socket) => {
     socket.on('request-suggestion', async (country_code) => {
         console.log(`Requesting suggestion for ${country_code} at ${new Date()}`);
 
-        let tweets_counter = 0;
+        const _tweetsBuffer = [];
 
         const countries = new Map([
             ['mx', 'México'],
@@ -40,37 +40,146 @@ io.on('connection', async (socket) => {
             ['ve', 'Venezuela']
         ]);
 
+        const categories = [
+            'financial_health_person',
+            'transition_sustainable_future_person',
+            'grow_clients_person',
+            'excellency_operation_person',
+        ];
+
         const actions = new Map([
-            ['mx', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]],
-            ['co', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]],
-            ['es', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]],
-            ['pe', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]],
-            ['ar', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]],
-            ['ve', [
-                'Línea de crédito para carros eléctricos',
-                'Congelar intereses durante 3 meses',
-                'Doble de puntos BBVA en compras en línea'
-            ]]
+            ['mx', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])],
+            ['co', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])],
+            ['es', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])],
+            ['pe', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])],
+            ['ar', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])],
+            ['ve', new Map([
+                ['financial_health_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['transition_sustainable_future_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['grow_clients_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]],
+                ['excellency_operation_person', [
+                    'Línea de crédito para carros eléctricos',
+                    'Congelar intereses durante 3 meses',
+                    'Doble de puntos BBVA en compras en línea'
+                ]]
+            ])]
         ]);
 
         const stream = client.stream('tweets/search/stream', {
@@ -85,23 +194,49 @@ io.on('connection', async (socket) => {
         }, Number(process.env.STREAM_LISTENING_TIME) || 30000);
 
         for await (const {data: tweet, includes, matching_rules: rules} of stream) {
-            tweets_counter++;
-            socket.emit('tweet', {
+            const _itemTweet = {
                 tweet, rules, users: includes.users
-            });
+            };
+            _tweetsBuffer.push(_itemTweet);
+            socket.emit('tweet', _itemTweet);
         }
 
         // TODO Analyze data
 
-        socket.emit('suggestion', {
-            country: {
-                code: country_code,
-                name: countries.get(country_code.toLowerCase())
-            },
-            action: actions.get(country_code.toLowerCase())[1],
-            emotions: [],
-            tweets: tweets_counter
-        });
+        const _suggestions = new Map();
+
+        for (const category of categories) {
+            _suggestions.set(category, {
+                action: actions.get(country_code.toLowerCase()).get(category)[1],
+                emotions: [],
+                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category))
+            });
+        }
+
+        /*const suggestions = new Map([
+            ['financial_health_person', {
+                action: actions.get(country_code.toLowerCase()).get('financial_health_person')[1],
+                emotions: [],
+                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === 'financial_health_person'))
+            }],
+            ['transition_sustainable_future_person', {
+                action: actions.get(country_code.toLowerCase()).get('transition_sustainable_future_person')[1],
+                emotions: [],
+                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === 'transition_sustainable_future_person'))
+            }],
+            ['grow_clients_person', {
+                action: actions.get(country_code.toLowerCase()).get('grow_clients_person')[1],
+                emotions: [],
+                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === 'grow_clients_person'))
+            }],
+            ['excellency_operation_person', {
+                action: actions.get(country_code.toLowerCase()).get('excellency_operation_person')[1],
+                emotions: [],
+                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === 'excellency_operation_person'))
+            }]
+        ]);*/
+
+        socket.emit('suggestions', {_suggestions, counter: _tweetsBuffer.length});
     });
 });
 
