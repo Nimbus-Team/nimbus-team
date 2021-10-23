@@ -7,14 +7,51 @@
   <meta name="Description" content="Put your description here.">
   <base href="/">
 
+
   <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-      background-color: #ededed;
-    }
+    :root {
+        --primary-color: #004481;
+        --primary-color-darker:#043263;
+        --primary-color-lighter: #1464A5;
+        
+        --secondary-color:#2DCCCD;
+        --secondary-color-darker:#028484;
+        --secondary-color-lighter:#5AC4C4;
+
+        --danger-color:#DA3851;
+        --danger-color-darker:#B92A45;
+        --danger-color-ligher:#E77D8E;
+
+        --color-white:#fff;
+        --color-dark:#072146;
+        --color-grey:#BDBDBD;
+        --color-grey-background:#E9E9E9;
+      }
+      html,body {margin: 0;padding: 0;font-family: Helvetica,Arial, sans-serif;}
+      body{background-color: var(--primary-color);color:var(--color-white);}
+
+      .container{max-width: 1080px;width: 90%;margin: 0 auto;}
+      #btnsContainer{padding:20px 0;}
+      #btnsContainer button{width:250px;height:30px;}
+      #btnsContainer button.active{background-color: var(--);}
+
+      #firstBlock{display:grid;grid-template-columns: 2fr 1fr;}
+      .d3_globe{width:500px;height:500px;background-color: var(--color-white);}
+      .d3_globe svg{transform: scale(2)}
+      .water {fill: #00248F;opacity:0.1;}
+      .land {fill: #2C1E3D;stroke: #FFF;stroke-width: 0.1px;opacity:0.5;}
+      .focused {opacity:1;}
+
+
+
+      .twitterContainer{border-radius:5px;background-color: var(--color-grey);padding:20px;}
+      .twitterContainer svg{width:25px;height: 25px;}
+      .tweetContainer{height: 40vh;overflow-y: scroll;}
+      .tweet{display: grid;grid-template-columns: 50px auto;background: var(--color-dark);padding: 10px;margin: 10px 0;}
+      .tweet .icon{width: 45px;height: 45px;background: var(--secondary-color);border-radius: 50px;}
+      .tweet p.texto{padding: 0;color: var(--secondary-color);}
+      .tweet p.fecha{color:var(--color-white);}
+
   </style>
   <title>nimbus-bbva-contigo</title>
 </head>
@@ -22,6 +59,11 @@
 <body>
   <nimbus-bbva-contigo></nimbus-bbva-contigo>
 
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/queue.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="mapa.js"></script>
   <script type="module" src="./src/nimbus-bbva-contigo.js"></script>
 </body>
 
