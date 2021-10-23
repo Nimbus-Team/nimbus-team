@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const Twitter = require('twitter-v2');
 
 const client = new Twitter({
@@ -7,6 +8,7 @@ const client = new Twitter({
 });
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
