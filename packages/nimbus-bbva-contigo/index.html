@@ -13,7 +13,6 @@
         --core-blue-color: #004481;
         --core-blue-color-darker:#043263;
         --core-blue-color-lighter: #1464A5;
-        --navy-blue-color: #072146;
 
         --aqua-color:#2DCCCD;
         --aqua-color-darker:#028484;
@@ -35,14 +34,14 @@
         --green-color-darker:#277A3E;
         --green-color-lighter:#88CA9A;
 
-        --color-white:#fff;
-        --color-dark:#072146;
-        --color-grey:#BDBDBD;
-        --color-grey-background:#E9E9E9;
+        --white-color:#fff;
+        --navy-blue-color: #072146;
+        --grey-color:#BDBDBD;
+        --grey-background-color:#E9E9E9;
       }
       html,body {margin: 0;padding: 0;font-family: Helvetica,Arial, sans-serif;}
-      body{background-color: var(--core-blue-color-darker);color:var(--color-white);padding:20px;}
-      .container{max-width: 1080px;width: 90%;margin: 20px auto;}
+      body{background-color: var(--core-blue-color-darker);color:var(--white-color);padding:20px;}
+      .container{max-width: 1080px;width: 90%;margin: 20px auto 0 auto;}
       
       .blueBox{background-color: var(--navy-blue-color);padding: 10px 20px;}
       .diagonal{position: relative;border: none;overflow: hidden;background-color:var(--aqua-color-darker);z-index:1;padding: 0px;}
@@ -52,7 +51,7 @@
 
       #header{display:grid;grid-template-columns: 2fr 1fr 1fr;align-items: center;justify-content: center;}
       #header h1{font-size:1.25rem;}
-      #header .countriesSelect{padding:10px;background-color: transparent;border:0;outline:0;width:100%;color: var(--color-white);}
+      #header .countriesSelect{padding:10px;background-color: transparent;border:0;outline:0;width:100%;color: var(--white-color);}
       #header .countriesSelect:hover{color:var(--navy-blue-color);}
       #header .addCountry{display: grid;grid-template-columns:40px auto;margin: 0 auto;justify-items: center;align-items: center;width:130px;outline:0;border:0;color:var(--blue-medium-color-lighter);background-color: transparent; transition:all 300ms ease-in;}
       #header .addCountry .circle{fill:var(--blue-medium-color-lighter);transition:all 300ms ease-in;}
@@ -68,50 +67,101 @@
       }
 
 
-
+      .containerSwitch{display: grid;}
+      @media(max-width:640px){
+        .containerSwitch #firstRow{grid-row-start: 2;grid-row-end: 3;}
+        .containerSwitch #gridContainer{grid-row-start: 1;grid-row-end: 2;}
+      }
 
       #firstRow{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;overflow:hidden;}
       #firstRow .staticContainer{display: grid; grid-template-columns: 250px 1fr;grid-gap:20px;}
       #firstRow .blueBox.mapContainer{padding: 0;}
-      #firstRow .d3_globe{width:250px;height:250px;}
+      #firstRow .d3_globe{width:250px;height:250px;margin:0 auto;}
       #firstRow .d3_globe .water {fill: var(--blue-medium-color-lighter);}
       #firstRow .d3_globe .land {fill: var(--green-color);stroke: #FFF;stroke-width: 0.1px;opacity:0.5;}
       #firstRow .d3_globe .focused {opacity:1;}
 
-      #firstRow .twitterContainer{height:230px;display: grid;grid-template-columns: 1fr 3fr;}
-      #firstRow .twitterContainer .twitterGeneralContainer #totalTweets{font-size:1rem;width:50px;height:40px;padding:10px;background-color: var(--aqua-color);color:var(--color-white);font-weight: 800;border:0;outline:0;}
-      #firstRow .twitterContainer .twitterGeneralContainer span{font-stretch: expanded;font-size:.8rem;color:var(--color-white);font-weight: 300;}
-
-
+      #firstRow .twitterContainer{height:230px;display: grid;grid-template-columns: 1fr 3fr;grid-gap:20px;}
+      #firstRow .twitterContainer .twitterGeneralContainer #totalTweets{font-size:1rem;width:50px;height:40px;padding:10px;background-color: var(--aqua-color);color:var(--white-color);font-weight: 800;border:0;outline:0;}
+      #firstRow .twitterContainer .twitterGeneralContainer span{font-stretch: expanded;font-size:.8rem;color:var(--white-color);font-weight: 300;}
       #firstRow .twitterContainer .twitterGeneralContainer #refresh{margin:30px auto 0 auto;transform-origin:50%;background:transparent;border:0;outline:0; transition:all 300ms ease-in-out;}
       #firstRow .twitterContainer .twitterGeneralContainer #refresh path{fill:var(--aqua-color);transition:all 300ms ease-in-out;}
       #firstRow .twitterContainer .twitterGeneralContainer #refresh:hover{transform:rotate(180deg);}
       #firstRow .twitterContainer .twitterGeneralContainer #refresh:hover path{fill:var(--yellow-color);}
-
       #firstRow .twitterContainer svg{width:35px;height: 35px;}
-      #firstRow .tweetsContainer{overflow-y: scroll;overflow-x:hidden;padding-right: 10px;
-        scrollbar-width: thin;scrollbar-color: var(--aqua-color) var(--blue-medium-color-lighter);}
+      #firstRow .tweetsContainer{overflow-y: scroll;overflow-x:hidden;padding-right: 10px;scrollbar-width: thin;scrollbar-color: var(--aqua-color) var(--blue-medium-color-lighter);}
       #firstRow .tweetsContainer::-webkit-scrollbar {width:1em;}
       #firstRow .tweetsContainer::-webkit-scrollbar-track {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
       #firstRow .tweetsContainer::-webkit-scrollbar-thumb {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
-
       #firstRow .tweet{display: grid;grid-template-columns: 40px auto;background: var(--core-blue-color);padding: 10px;margin: 10px 0;}
-      #firstRow .tweet .icon{width: 30px;height: 30px;background: var(--aqua-color);border-radius: 50px;}
+      #firstRow .tweet .icon{width: 30px;height: 30px;border-radius: 50px;}
+      #firstRow .tweet:nth-child(odd) .icon{background: var(--aqua-color);}
+      #firstRow .tweet:nth-child(even) .icon{background: var(--white-color);}
       #firstRow .tweet p.texto{font-size:.9rem;padding: 0;margin:0;color: var(--blue-medium-color-lighter);}
-      #firstRow .tweet p.fecha{font-size:.8rem;color:var(--color-white);text-align: right;}
+      #firstRow .tweet p.fecha{font-size:.8rem;color:var(--white-color);text-align: right;}
 
-      @media(max-width:768px){
-        #firstRow{grid-template-columns: 100%;grid-gap:20px;height: auto;}
+      @media(max-width:900px){
+        #firstRow{grid-template-columns: 1fr;height: auto;}
       }
       @media(max-width:640px){
-        
+        #firstRow .twitterContainer{grid-template-columns: 1fr; height:500px;}
+        #firstRow .twitterGeneralContainer{display:grid;grid-template-columns: 1fr 1fr;}
+        #firstRow .twitterContainer .twitterGeneralContainer #refresh{margin:0 auto;}
+        #firstRow .staticContainer{grid-template-columns: 1fr;}
+        #firstRow .staticContainer{grid-template-columns: 1fr;}
       }
 
 
-      .prioridadesContainer{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;}
-      .cardContainer{background-color: var(--core-blue-color-darker);}
-      .card{background-color: var(--blue-medium-color-lighter);padding:20px;}
+      .prioridadesContainer{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;position:relative;}
+      .prioridadesContainer .title{color:var(--aqua-color);}
+      .prioridadesContainer .card:nth-child(even) .title{text-align: right;}
 
+      .prioridadesContainer .card .cardBody{display:grid;grid-template-columns:1fr 1fr;width:70%;margin:30px auto;grid-gap:20px;}
+      .prioridadesContainer .card .cardBody .dataContainer{display:grid;}
+      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer{display:grid;grid-template-columns:65px 1fr;align-items: center;margin-bottom:20px;}
+      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer .totalTweets{font-size: .9rem;width: 35px;height: 30px;padding: 10px;border: 1px solid var(--aqua-color);color: var(--aqua-color);font-weight: 800;outline: 0;}
+      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer span{font-stretch: expanded;font-size:.8rem;color:var(--white-color);font-weight: 300;}
+      .prioridadesContainer .card .cardBody .dataContainer p{margin: 0;}
+      .prioridadesContainer .card .cardBody .dataContainer .badWord p{color:var(--red-color);}
+      .prioridadesContainer .card .cardBody .dataContainer .goodWord p{color:var(--blue-medium-color);}
+      .prioridadesContainer .card .cardBody .actionContainer{
+        display: grid;
+justify-content: center;
+align-items: center;
+background: var(--core-blue-color);
+text-align: center;
+color: var(--aqua-color);
+border-bottom: 1px solid var(--aqua-color);
+      }
+      .prioridadesContainer .card .cardFooter{display:grid;align-items: center;}
+      .prioridadesContainer .card .cardFooter .userContainer:hover{cursor: pointer;}
+      .prioridadesContainer .card:nth-child(odd) .cardFooter{grid-template-columns: 50px 110px;}
+      .prioridadesContainer .card:nth-child(even) .cardFooter{grid-template-columns: 110px 60px;text-align: right;justify-content: end;}
+      .prioridadesContainer .card:nth-child(even) .cardFooter div{grid-row-start:1;grid-row-end:2;}
+      .prioridadesContainer .card:nth-child(even) .cardFooter .userContainer{grid-column-start:2;grid-column-end:3;}
+      .prioridadesContainer .card:nth-child(even) .cardFooter .emotionalContainer{grid-column-start:1;grid-column-end:2;}
+
+      .prioridadesContainer .card .cardFooter .emotionalContainer{display:grid;grid-template-columns:1fr 1fr 1fr;grid-gap:20px;}
+      .prioridadesContainer .card .cardFooter .emotionalContainer .emotion{opacity:.2;}
+      .prioridadesContainer .card .cardFooter .emotionalContainer .active{opacity:1;}
+      .prioridadesContainer .card .cardFooter .emotionalContainer .active:hover{cursor:pointer;}
+      .prioridadesContainer .card .cardFooter circle{fill:none;stroke-miterlimit:10;stroke-width:2px;}
+      .prioridadesContainer .card .cardFooter .positive path{fill:var(--blue-medium-color);}
+      .prioridadesContainer .card .cardFooter .positive circle{stroke:var(--blue-medium-color);}
+      .prioridadesContainer .card .cardFooter .neutral rect{fill:var(--white-color);}
+      .prioridadesContainer .card .cardFooter .neutral circle{stroke:var(--white-color);}
+      .prioridadesContainer .card .cardFooter .negative path{fill:var(--red-color);}
+      .prioridadesContainer .card .cardFooter .negative circle{stroke:var(--red-color);}
+
+    
+      .prioridadesContainer .card .cardFooter .userContainer svg path{ fill:var(--yellow-color); }
+
+
+
+
+
+      .prioridadesContainer .rombo{box-shadow: 0px 0px 10px var(--navy-blue-color);position: absolute;top:calc(50% - 50px);left:calc(50% - 50px);width:100px;height:100px;text-align: center;background:var(--aqua-color);transform:rotate(45deg);}
+      .prioridadesContainer .rombo p{transform: rotate(-45deg);margin: 0;padding: 0;transform-origin: 85% 100%;}
   </style>
   <title>nimbus-bbva-contigo</title>
 </head>
