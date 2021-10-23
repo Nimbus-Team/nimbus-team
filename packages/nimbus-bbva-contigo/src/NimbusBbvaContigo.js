@@ -11,7 +11,10 @@ export class NimbusBbvaContigo extends NimbusRequest {
     return {
       country: { type:String },
       socket:{ type:Object },
-      countries: { type: Array}
+      countries: { type: Array},
+      totalTweets:{type:String},
+      tweets:{type:Array},
+      suggestions:{type:Array}
     };
   }
 
@@ -25,7 +28,11 @@ export class NimbusBbvaContigo extends NimbusRequest {
 
   constructor() {
     super();
+    this.totalTweets = '203';
     this.countries = [];
+    this.tweens = [];
+    this.suggestions = [];
+
     // this.socket = io('http://localhost:5000');
     // this.socket = io('https://stream-twitter-hackathon.herokuapp.com');
     // this.socket.on("connect", () => {
@@ -33,10 +40,12 @@ export class NimbusBbvaContigo extends NimbusRequest {
     // });
     // this.socket.on('tweet', data => {
       // console.log(data);
+        // this.tweens = [...data];
     // });
     // this.socket.on('suggestions', data => {
       // console.log('suggestions');
       // console.log(data);
+      // this.suggestions = [...data];
     // });
   }
 
@@ -134,8 +143,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
                   projection.rotate(r(t));
                   svg.selectAll("path").attr("d", path)
                     .classed("focused", function(d, i) { return d.id == focusedCountry.id ? focused = d : false; })
-                    .style("fill", function(d, i) { return d.id == focusedCountry.id ? color : false; });
-    
+                    .style("fill", function(d, i) { return d.id == focusedCountry.id ? "#004481" : false; });
                 };
               })
           })();
@@ -149,18 +157,35 @@ export class NimbusBbvaContigo extends NimbusRequest {
       endpoint:'countries'
     });
     this.countries = countries.message === 'COUNTRY_FOUND' ? countries.data : [];
+    countries.message === 'COUNTRY_FOUND' ? this.setRequestCountry(countries.data[0].code) : '';
   }
 
-  changeCountryMX(){
-    this.d3ChangeCountry("mx",'#004481');
-    console.log("mx");
-    // this.socket.emit('request-suggestion','mx');
+  setRequestCountry(code_country){
+    this.tweens = [];
+    this.suggestions = [];
+    this.d3ChangeCountry(code_country);
     this.setTweets();
+
+    // this.socket.emit('request-suggestion',code_country);
+
+    //TODO
+    //  this.setTweets();
+    //  this.showLoading();
+    //  this.hideLoading();
+    //  this.setSuggestions();
+
   }
 
-  changeCountryES(){
-    this.d3ChangeCountry("es",'#004481');
-    // this.socket.emit('request-suggestion','es');
+  changeCountry(){
+      const country = document.getElementById('paises').value;
+      console.log(country);
+      this.setRequestCountry(country);
+  }
+
+  createTweet(data){
+    let node;
+    
+    return node;
   }
 
   setTweets(){
@@ -170,15 +195,16 @@ export class NimbusBbvaContigo extends NimbusRequest {
       let twitter = '';
       data.forEach(item => {
         let f = new Date(item.tweet.created_at);
-        twitter += `<div class="tweet">`;
+        twitter = `<div class="tweet">`;
         twitter += (Math.random() > .5) ? `<div class="icon danger"></div>` : `<div class="icon secondary"></div>`;
         twitter += `<div class="tweetTexto">
               <p class="texto">${item.tweet.text}</p>
-              <p class="fecha">${f.toLocaleDateString('en-US')}</p>
+              <p class="fecha">${f.toLocaleDateString('en-US')} - ${f.toLocaleTimeString('en-US')} </p>
             </div>
           </div>`;
+          document.getElementById('tweetsContainer').innerHTML += twitter;
       });
-      document.getElementById('tweetContainer').innerHTML = twitter;
+      // document.getElementById('tweetsContainer').innerHTML = twitter;
     });
   }
 
@@ -189,38 +215,67 @@ export class NimbusBbvaContigo extends NimbusRequest {
   render() {
     return html`
       <main>
-        <div class="container box" id="header">
-          <h1>BBVA Contigo - EMOP</h1>
-          <div class="diagonal">
-            <select class="countriesSelect" id="paises">
-              ${
-                this.countries.length>0 ?
-                  this.countries.map( item => html `<option value="${item.code}">${item.name}</option>`) : ''
-              }
-            </select>
+        <section class="container">
+          <div class="blueBox" id="header">
+              <h1>BBVA Contigo - EMOP</h1>
+              <div class="diagonal">
+                <select class="countriesSelect" id="paises" @change=${this.changeCountry}>
+                  ${
+                    this.countries.length>0 ?
+                      this.countries.map( item => html `<option value="${item.code}">${item.name}</option>`) : ''
+                  }
+                </select>
+              </div>
+              <div>
+                <button class="addCountry">
+                  <svg viewBox="0 0 22 22" width="30" height="30">
+                    <circle class="circle" cx="11" cy="11" r="10"/>
+                    <polygon class="polygon" points="12 8 12 10 14 10 14 12 12 12 12 14 10 14 10 12 8 12 8 10 10 10 10 8 12 8"/>
+                  </svg>
+                  <span>Agregar País</span>
+                </button>
+              </div>
           </div>
-          <button class="addCountry">
-            <svg viewBox="0 0 22 22" width="30" height="30">
-            <circle class="circle" cx="11" cy="11" r="10"/>
-            <polygon class="polygon" points="12 8 12 10 14 10 14 12 12 12 12 14 10 14 10 12 8 12 8 10 10 10 10 8 12 8"/>
-            </svg>
-            Agregar País
-          </button>
-        </div>
-        <div class="container" id="btnsContainer">
-          <button class="active" @click="${this.changeCountryMX}">MEX</button>
-          <button @click="${this.changeCountryES}">ESP</button>
-        </div>
-        <div class="container" id="firstBlock">
-          <div class="mapContainer">
-            <div class="d3_globe" id="d3_globe"></div>
-          </div>
-          <div class="twitterContainer">
-            <h2>Tweets</h2>
-            <div class="tweetContainer" id="tweetContainer">
+        </section>
+        <section class="container" id="firstRow">
+          <div class="blueBox twitterContainer">
+            <div class="twitterGeneralContainer">
+                <div class="totalTweets">
+                  <p id="totalTweets">${this.totalTweets}</p>
+                  <span>Tweets <br>analizados</span>
+                </div>
+                <button id="refresh">
+                  <svg viewBox="0 0 28.5 26.02" width="25" height="25"><path d="M2.26,11.86l7.89-3.37L6.63,6.78a9.7,9.7,0,0,1,17,4.63l3.11-1.33A13,13,0,0,0,3.52,5.3L0,3.59Z" style="fill:#2dcccd"/><path d="M26.28,13.27l-7.89,3.37L22,18.38a9.69,9.69,0,0,1-17.68-4.6L1.15,15.16A13.09,13.09,0,0,0,14,26a13,13,0,0,0,11-6.15l3.45,1.67Z"/></svg>
+                </button>
+            </div>
+            <div class="tweetsContainer" id="tweetsContainer">
             </div>
           </div>
-        </div>
+          <div class="staticContainer">
+              <div class="blueBox mapContainer">
+                <div class="d3_globe" id="d3_globe"></div>
+              </div>
+              <div class="blueBox symbolsContainer">
+
+              </div>
+          </div>
+        </section>
+        <section class="container">
+            <div class="prioridadesContainer">
+                  <div class="blueBox">
+                    <p class="title">Mejorar la salud finnciera de los clientes</p>
+                  </div>
+                  <div class="blueBox">
+                    <p class="title">Ayudar a los clientes en la transición facia el futuro sotenible</p>
+                  </div>
+                  <div class="blueBox">
+                    <p class="title">Crecer en clientes</p>
+                  </div>
+                  <div class="blueBox">
+                    <p class="title">Buscar la excelencia operativa</p>
+                  </div>
+            </div>
+        </section>
       </main>
     `;
   }

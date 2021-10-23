@@ -42,50 +42,73 @@
       }
       html,body {margin: 0;padding: 0;font-family: Helvetica,Arial, sans-serif;}
       body{background-color: var(--core-blue-color-darker);color:var(--color-white);padding:20px;}
-
-      .container{max-width: 1080px;width: 90%;margin: 0 auto;}
-      .box{background-color: var(--core-blue-color);border-radius: 10px;padding: 10px 20px;}
-      #header{display:grid;grid-template-columns: 2fr 1fr 1fr;align-items: center;justify-content: center;}
-      #header h1{font-size:1.25rem;}
-      #header .countriesSelect{background-color: transparent;border:0;outline:0;width:100%;padding: 10px 5px;color: var(--color-white);}
-      #header .countriesSelect:hover{color: var(--color-dark);}
-
+      .container{max-width: 1080px;width: 90%;margin: 20px auto;}
+      
+      .blueBox{background-color: var(--navy-blue-color);padding: 10px 20px;}
       .diagonal{position: relative;border: none;overflow: hidden;background-color:var(--aqua-color-darker);z-index:1;padding: 0px;}
       .diagonal:after {content: "";position: absolute;top: 0;left: 0;width: 500%;height: 1000%;background: var(--aqua-color-lighter);z-index: -1;transform-origin: 0% 0%;transform: translateY(10%) translateX(16%) rotate(-45deg);transition: transform .3s;}
       .diagonal:hover::after {transform: translateY(10%) translateX(-25px) rotate(-45deg);}
 
-      #header .addCountry{display: grid;grid-template-columns:40px auto;justify-items: center;align-items: center;width:130px;outline:0;border:0;color:var(--blue-medium-color-lighter);background-color: transparent; transition:all 300ms ease-in;}
+
+      #header{display:grid;grid-template-columns: 2fr 1fr 1fr;align-items: center;justify-content: center;}
+      #header h1{font-size:1.25rem;}
+      #header .countriesSelect{padding:10px;background-color: transparent;border:0;outline:0;width:100%;color: var(--color-white);}
+      #header .countriesSelect:hover{color:var(--navy-blue-color);}
+      #header .addCountry{display: grid;grid-template-columns:40px auto;margin: 0 auto;justify-items: center;align-items: center;width:130px;outline:0;border:0;color:var(--blue-medium-color-lighter);background-color: transparent; transition:all 300ms ease-in;}
       #header .addCountry .circle{fill:var(--blue-medium-color-lighter);transition:all 300ms ease-in;}
       #header .addCountry .polygon{fill:var(--core-blue-color);transition:all 300ms ease-in;}
-      
       #header .addCountry:hover{cursor:pointer;color:var(--yellow-color);}
       #header .addCountry:hover .circle{fill:var(--yellow-color);}
-      
-      
+      @media(max-width:768px){
+      }
+      @media(max-width:640px){
+        #header{display:grid;grid-template-columns: 1fr 50px;text-align: center;}
+        #header h1{grid-column-start: 1;grid-column-end: 3;}
+        #header .addCountry span{display:none;}
+      }
 
 
 
 
-      #btnsContainer{padding:20px 0;}
-      #btnsContainer button{width:250px;height:30px;}
-      #btnsContainer button.active{background-color: var(--);}
+      #firstRow{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;overflow:hidden;}
+      #firstRow .staticContainer{display: grid; grid-template-columns: 250px 1fr;grid-gap:20px;}
+      #firstRow .blueBox.mapContainer{padding: 0;}
+      #firstRow .d3_globe{width:250px;height:250px;}
+      #firstRow .d3_globe .water {fill: var(--blue-medium-color-lighter);}
+      #firstRow .d3_globe .land {fill: var(--green-color);stroke: #FFF;stroke-width: 0.1px;opacity:0.5;}
+      #firstRow .d3_globe .focused {opacity:1;}
 
-      #firstBlock{display:grid;grid-template-columns: 1fr 1fr;}
-      .d3_globe{width:250px;height:250px;}
-      .water {fill: var(--blue-medium-color-lighter);}
-      .land {fill: var(--green-color);stroke: #FFF;stroke-width: 0.1px;opacity:0.5;}
-      .focused {opacity:1;}
+      #firstRow .twitterContainer{height:230px;display: grid;grid-template-columns: 1fr 3fr;}
+      #firstRow .twitterContainer .twitterGeneralContainer #totalTweets{font-size:1rem;width:50px;height:40px;padding:10px;background-color: var(--aqua-color);color:var(--color-white);font-weight: 800;border:0;outline:0;}
+      #firstRow .twitterContainer .twitterGeneralContainer span{font-stretch: expanded;font-size:.8rem;color:var(--color-white);font-weight: 300;}
 
 
+      #firstRow .twitterContainer .twitterGeneralContainer #refresh{margin:30px auto 0 auto;transform-origin:50%;background:transparent;border:0;outline:0; transition:all 300ms ease-in-out;}
+      #firstRow .twitterContainer .twitterGeneralContainer #refresh path{fill:var(--aqua-color);transition:all 300ms ease-in-out;}
+      #firstRow .twitterContainer .twitterGeneralContainer #refresh:hover{transform:rotate(180deg);}
+      #firstRow .twitterContainer .twitterGeneralContainer #refresh:hover path{fill:var(--yellow-color);}
 
-      .twitterContainer{border-radius:5px;background-color: var(--color-grey);padding:20px;}
-      .twitterContainer svg{width:25px;height: 25px;}
-      .tweetContainer{height: 40vh;overflow-y: scroll;}
-      .tweet{display: grid;grid-template-columns: 50px auto;background: var(--color-dark);padding: 10px;margin: 10px 0;}
-      .tweet .icon{width: 45px;height: 45px;background: var(--aqua-color);border-radius: 50px;}
-      .tweet p.texto{padding: 0;color: var(--aqua-color);}
-      .tweet p.fecha{color:var(--color-white);}
+      #firstRow .twitterContainer svg{width:35px;height: 35px;}
+      #firstRow .tweetsContainer{overflow-y: scroll;overflow-x:hidden;padding-right: 10px;
+        scrollbar-width: thin;scrollbar-color: var(--aqua-color) var(--blue-medium-color-lighter);}
+      #firstRow .tweetsContainer::-webkit-scrollbar {width:1em;}
+      #firstRow .tweetsContainer::-webkit-scrollbar-track {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
+      #firstRow .tweetsContainer::-webkit-scrollbar-thumb {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
 
+      #firstRow .tweet{display: grid;grid-template-columns: 40px auto;background: var(--core-blue-color);padding: 10px;margin: 10px 0;}
+      #firstRow .tweet .icon{width: 30px;height: 30px;background: var(--aqua-color);border-radius: 50px;}
+      #firstRow .tweet p.texto{font-size:.9rem;padding: 0;margin:0;color: var(--blue-medium-color-lighter);}
+      #firstRow .tweet p.fecha{font-size:.8rem;color:var(--color-white);text-align: right;}
+
+      @media(max-width:768px){
+        #firstRow{grid-template-columns: 100%;grid-gap:20px;height: auto;}
+      }
+      @media(max-width:640px){
+        
+      }
+
+
+      .prioridadesContainer{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;}
       .cardContainer{background-color: var(--core-blue-color-darker);}
       .card{background-color: var(--blue-medium-color-lighter);padding:20px;}
 
