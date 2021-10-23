@@ -5,7 +5,7 @@ const excludedWords = require('./excluded-words');
 
 module.exports = function(text) {
     const cleanText = text.split(' ').filter(word => {
-        return !word.includes('@') && word.length > 1 && !excludedWords.includes(word) && numbersRegex.test(word);
+        return !word.includes('@') && word.length > 1 && !excludedWords.includes(word) && !numbersRegex.test(word);
     }).join(' ');
     return sentiment.analyze(cleanText, trainedData);
 }
