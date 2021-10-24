@@ -168,15 +168,15 @@ class EMOPRules extends NimbusRequest {
           </vaadin-button>
         </div>
         <div id="category-form">
-          <vaadin-text-field label="Categoría"></vaadin-text-field>
-          <vaadin-text-field label="Etiqueta"></vaadin-text-field>
-          <vaadin-button @click=${this.showQuickForms} theme="primary">
+          <vaadin-text-field label="Categoría" @input=${(e) => {this.newCategory.name = e.target.value}}></vaadin-text-field>
+          <vaadin-text-field label="Etiqueta" @input=${(e) => {this.newCategory.code = e.target.value}}></vaadin-text-field>
+          <vaadin-button @click=${this.addCategory} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Enviar
           </vaadin-button>
         </div>
         <div id="client-form">
-          <vaadin-text-field label="Cliente"></vaadin-text-field>
+          <vaadin-text-field label="Cliente" @input=${(e) => {this.newCountry.client = e.target.value}}></vaadin-text-field>
           <vaadin-button @click=${this.showQuickForms} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Enviar

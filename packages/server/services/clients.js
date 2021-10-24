@@ -1,3 +1,4 @@
+const { v4 } = require('uuid');
 const {clientDB} = require('../db');
 const {res} = require('../utils');
 
@@ -7,7 +8,8 @@ const CLIENT_UPDATED = 'CLIENT_UPDATED';
 const CLIENT_DELETED = 'CLIENT_DELETED';
 
 const createClient = async (request, response) => {
-    const {code, name} = request.body;
+    const {name} = request.body;
+    const code = v4();
     try {
         const match = await clientDB.create(code, name);
         res(match, await clientDB.get(code), CLIENT_CREATED, response);
