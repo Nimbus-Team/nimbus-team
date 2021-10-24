@@ -157,7 +157,7 @@ class EMOPRules extends NimbusRequest {
 
   addRule(e) {
     this.request({
-      endpoint: 'rules',
+      endpoint: 'rules/create',
       method: 'POST',
       body: {
         keywords: this.keywords,
