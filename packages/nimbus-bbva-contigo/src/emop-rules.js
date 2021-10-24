@@ -13,6 +13,7 @@ class EMOPRules extends NimbusRequest {
     this.categories = [];
     this.clients = [];
     this.rules = []
+    this.newCountry = {}
   }
 
   static get properties() {
@@ -117,6 +118,16 @@ class EMOPRules extends NimbusRequest {
     this.shadowRoot.querySelector('.quick-forms').classList.remove('open');
   }
 
+  addCountry(e) {
+    this.request({
+      endpoint: 'countries',
+      method: 'POST',
+      body: this.newCountry
+    }).then(res => {
+      this.countries.push(res.data);
+    });
+  }
+
   render() {
     return html`
       <div class="nav-menu">
@@ -147,11 +158,11 @@ class EMOPRules extends NimbusRequest {
           <iron-icon icon="vaadin:close" slot="prefix"></iron-icon>
         </vaadin-button>
         <div id="country-form">
-          <vaadin-text-field label="Código"></vaadin-text-field>
-          <vaadin-text-field label="Pais"></vaadin-text-field>
-          <vaadin-text-field label="Palabras clave por país"></vaadin-text-field>
-          <vaadin-text-field label="Lenguaje"></vaadin-text-field>
-          <vaadin-button @click=${this.showQuickForms} theme="primary">
+          <vaadin-text-field label="Código" @input=${(e) => {this.newCountry.code = e.target.value}}></vaadin-text-field>
+          <vaadin-text-field label="Pais" @input=${(e) => {this.newCountry.name = e.target.value}}></vaadin-text-field>
+          <vaadin-text-field label="Palabras clave por país" @input=${(e) => {this.newCountry.locations = e.target.value}}></vaadin-text-field>
+          <vaadin-text-field label="Lenguaje" @input=${(e) => {this.newCountry.lang = e.target.value}}></vaadin-text-field>
+          <vaadin-button @click=${this.addCountry} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Enviar
           </vaadin-button>

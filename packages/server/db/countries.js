@@ -13,12 +13,12 @@ const COUNTRY_NOT_ADDED_LABEL = 'COUNTRY_NOT_ADDED_LABEL';
 const COUNTRY_NOT_DELETED_LABEL = 'COUNTRY_NOT_DELETED_LABEL';
 const COUNTRY_NOT_DELETED = 'COUNTRY_NOT_DELETED';
 
-async function create(code, name, lang) {
+async function create(code, name, lang, locations) {
     const mongo = new MongoAccess();
     try {
         await mongo.connect();
         return await mongo.client.collection(COLLECTION_COUNTRIES).insertOne({
-            code, name, lang
+            code, name, lang, locations
         });
     } catch (e) {
         return handleError(COUNTRY_NOT_CREATED, e);
