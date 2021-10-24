@@ -17,12 +17,12 @@ const ACTION_CLIENT_NOT_DELETED = 'ACTION_CLIENT_NOT_DELETED';
 const ACTION_CATEGORY_NOT_ADDED = 'ACTION_CATEGORY_NOT_ADDED';
 const ACTION_CATEGORY_NOT_DELETED = 'ACTION_CATEGORY_NOT_DELETED';
 
-async function create(code, description, locations, clients, categories) {
+async function create(code, description, locations, clients, categories, emotions) {
     const mongo = new MongoAccess();
     try {
         await mongo.connect();
         return await mongo.client.collection(COLLECTION_ACTIONS).insertOne({
-            code, description, locations, clients, categories
+            code, description, locations, clients, categories, emotions
         });
     } catch (e) {
         return handleError(ACTION_NOT_CREATED, e);
@@ -35,7 +35,7 @@ async function update(code, description) {
         await mongo.connect();
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code
-        },{
+        }, {
             $set: {
                 code, description
             }
@@ -64,6 +64,25 @@ async function getAll() {
     try {
         await mongo.connect();
         return await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
+    } catch (e) {
+        return handleError(ACTION_NOT_FOUND, e);
+    }
+}
+
+async function getByRecognize(client, category, location, emotion) {
+    const mongo = new MongoAccess();
+    try {
+        await mongo.connect();
+        const actions = await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
+        return actions.reduce((acc, action) => {
+            if (action.clients.some(_client => _client.code === client) &&
+                action.categories.some(_category => _category.code === category) &&
+                action.locations.some(_location => _location.code === location) &&
+                action.emotions.some(_emotion => _emotion.code === emotion)) {
+                acc = action;
+            }
+            return acc;
+        }, {});
     } catch (e) {
         return handleError(ACTION_NOT_FOUND, e);
     }
@@ -193,4 +212,17 @@ async function removeCategory(code_action, code_category) {
     }
 }
 
-module.exports = {create, getAll, update, remove, get, addLocation, removeLocation, addClient, removeClient, addCategory, removeCategory};
+module.exports = {
+    create,
+    getAll,
+    update,
+    remove,
+    get,
+    getByRecognize,
+    addLocation,
+    removeLocation,
+    addClient,
+    removeClient,
+    addCategory,
+    removeCategory
+};
