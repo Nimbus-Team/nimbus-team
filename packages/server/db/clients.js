@@ -63,11 +63,11 @@ async function getAll() {
     }
 }
 
-async function get() {
+async function get(code) {
     const mongo = new MongoAccess();
     try {
         await mongo.connect();
-        return await mongo.client.collection(COLLECTION_CLIENTS).findOne({});
+        return await mongo.client.collection(COLLECTION_CLIENTS).findOne({code});
     } catch (e) {
         return handleError(CLIENT_NOT_FOUND, e);
     }

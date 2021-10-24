@@ -200,7 +200,7 @@ class EMOPRules extends NimbusRequest {
         </div>
         <div id="client-form">
           <vaadin-text-field label="Cliente" @input=${(e) => {this.newClient.name = e.target.value}}></vaadin-text-field>
-          <vaadin-button @click=${this.showQuickForms} theme="primary">
+          <vaadin-button @click=${this.addClient} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Enviar
           </vaadin-button>
