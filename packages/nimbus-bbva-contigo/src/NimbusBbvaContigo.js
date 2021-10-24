@@ -26,7 +26,6 @@ export class NimbusBbvaContigo extends NimbusRequest {
     this.tweets = [];
     this.suggestions = [];
     this.totalTweets = '';
-
     this.socket = io('https://stream-twitter-hackathon.herokuapp.com');
     this.socket.on("connect", () => {
       console.log("client side socket connection established");
@@ -285,7 +284,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
               <div class="prioridadesContainer">
                   ${
                     this.suggestions.length > 0 ? 
-                        this.suggestions[0].suggestions.map(element => {
+                        this.suggestions.map(element => {
                           return html `
                             <div class="card blueBox">
                               <div class="cardHeader">
