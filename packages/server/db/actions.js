@@ -64,15 +64,13 @@ async function getAll() {
 }
 
 async function getByRecognize(client, category, location, emotion) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const actions = await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
         return actions.reduce((acc, action) => {
-            if (action.clients.some(_client => _client.code === client) &&
-                action.categories.some(_category => _category.code === category) &&
-                action.locations.some(_location => _location.code === location) &&
-                action.emotions.some(_emotion => _emotion.code === emotion)) {
+            if (action.clients.some(_client => _client === client) &&
+                action.categories.some(_category => _category === category) &&
+                action.locations.some(_location => _location === location) &&
+                action.emotions.some(_emotion => _emotion === emotion)) {
                 acc = action;
             }
             return acc;

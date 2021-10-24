@@ -122,15 +122,6 @@ io.on('connection', async (socket) => {
 
         const _tweetsBuffer = [];
 
-        const countries = new Map([
-            ['mx', 'México'],
-            ['co', 'Colombia'],
-            ['es', 'España'],
-            ['pe', 'Perú'],
-            ['ar', 'Argentina'],
-            ['ve', 'Venezuela']
-        ]);
-
         const categories = await categoryDB.getAll();
 
         const stream = client.stream('tweets/search/stream', {
@@ -159,8 +150,9 @@ io.on('connection', async (socket) => {
         for (const {code: category} of categories) {
             const tweets = _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category));
             const report = getReport(tweets, 10);
+            const action = await actionDB.getByRecognize('user', category, country_code, report.trend);
             _suggestions.set(category, {
-                action: actionDB.getByRecognize('user', category, country_code, report.trend),
+                action: action.description,
                 tweets,
                 report
             });
@@ -170,8 +162,7 @@ io.on('connection', async (socket) => {
 
         socket.emit('suggestions', {
             suggestions: Array.from(_suggestions, ([category, suggestion]) => ({
-                category: categoryDB.get(category),
-                suggestion
+                category: categories.find(_category => _category.code === category).name, suggestion
             })),
             counter: _tweetsBuffer.length
         });
