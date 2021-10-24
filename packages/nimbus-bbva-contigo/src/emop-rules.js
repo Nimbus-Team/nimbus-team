@@ -173,7 +173,10 @@ class EMOPRules extends NimbusRequest {
     return html`
       <div class="back-zone">
         <emop-link href="/">
-          Return to dashboard
+          <vaadin-button var="category" theme="primary">
+            <iron-icon icon="vaadin:sign-out" slot="prefix"></iron-icon>
+            Return to dashboard
+          </vaadin-button>
         </emop-link>
       </div>
       <div class="nav-menu">
