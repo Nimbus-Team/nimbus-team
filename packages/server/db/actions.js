@@ -21,7 +21,7 @@ var mongo = mongo || new mongoClient();
 
 async function create(code, description, locations, clients, categories) {
     try {
-        await mongo.client.collection(COLLECTION_ACTIONS).insertOne({
+        return await mongo.client.collection(COLLECTION_ACTIONS).insertOne({
             code, description, locations, clients, categories
         });
     } catch (e) {
