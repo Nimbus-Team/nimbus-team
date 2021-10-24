@@ -63,11 +63,11 @@ async function getAll() {
     }
 }
 
-async function get() {
+async function get(code) {
     const mongo = new MongoAccess();
     try {
         await mongo.connect();
-        return await mongo.client.collection(COLLECTION_CATEGORIES).findOne({});
+        return await mongo.client.collection(COLLECTION_CATEGORIES).findOne({code});
     } catch (e) {
         return handleError(CATEGORY_NOT_FOUND, e);
     }
