@@ -7,8 +7,9 @@ const RULE_DELETED = 'RULE_DELETED';
 
 const createRule = async (request, response) => {
     const {keywords, tag, lang} = request.body;
+    const keywordsArray = keywords.replace(/ /g,'').split(',');
     try {
-        const match = await ruleDB.create(keywords, tag, lang);
+        const match = await ruleDB.create(keywordsArray, tag, lang);
         response.status(200).json({
             message: RULE_CREATED,
             data: match.data

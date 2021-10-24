@@ -16,6 +16,7 @@ class EMOPRules extends NimbusRequest {
     this.newCountry = {}
     this.newCategory = {}
     this.newClient = {}
+    this.keywords = '';
   }
 
   static get properties() {
@@ -23,6 +24,9 @@ class EMOPRules extends NimbusRequest {
       countries: { type: Array },
       clients: { type: Array },
       categories: { type: Array },
+      currentCountry: { type: String },
+      currentClient: { type: String },
+      currentCategory: { type: String },
       rules: { type: Array }
     };
   }
@@ -151,25 +155,39 @@ class EMOPRules extends NimbusRequest {
     }); 
   }
 
+  addRule(e) {
+    this.request({
+      endpoint: 'rules',
+      method: 'POST',
+      body: {
+        keywords: this.keywords,
+        tag: this.currentCategory,
+        lang: this.countries.find(country => country.code === this.currentCountry).lang
+      }
+    }).then(res => {
+      this.rules = [...this.rules, res.data];
+    });
+  }
+
   render() {
     return html`
       <div class="nav-menu">
         <div class="nav-element">
-          <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name"></vaadin-combo-box>
+          <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCountry = e.detail.value; console.log(this.currentCountry)}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="country" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories} item-value-path="code" item-label-path="name"></vaadin-combo-box>
+          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCategory = e.detail.value; console.log(this.currentCategory)}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="category" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients} item-value-path="code" item-label-path="name"></vaadin-combo-box>
+          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentClient = e.detail.value; console.log(this.currentClient)}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="client" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
@@ -209,8 +227,8 @@ class EMOPRules extends NimbusRequest {
       <div class="content">
         <h3>Registrar Regla</h3>
         <div class="crud-form">
-          <vaadin-text-field placeholder="Palabras clave"></vaadin-text-field>
-          <vaadin-button @click=${this.showQuickForms} theme="primary">
+          <vaadin-text-field placeholder="Palabras clave" @input=${(e) => {this.keywords = e.target.value}}></vaadin-text-field>
+          <vaadin-button @click=${this.addRule} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Registrar
           </vaadin-button>
