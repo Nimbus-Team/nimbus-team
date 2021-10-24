@@ -27,20 +27,19 @@ export class NimbusBbvaContigo extends NimbusRequest {
     this.totalTweets = '';
 
     // this.socket = io('http://localhost:5000');
-    // this.socket = io('https://stream-twitter-hackathon.herokuapp.com');
-    // this.socket.on("connect", () => {
-      // console.log("client side socket connection established");
-    // });
-    // this.socket.on('tweet', data => {
-      // console.log(data);
-      //this.tweets = [...this.tweets,data];
-    // });
-    // this.socket.on('suggestions', data => {
-      // console.log('suggestions');
-      // console.log(data);
-      // this.suggestions = [...setSuggestions,data.suggestions];
-      // this.totalTweets = data.counter;
-    // });
+    this.socket = io('https://stream-twitter-hackathon.herokuapp.com');
+    this.socket.on("connect", () => {
+      console.log("client side socket connection established");
+    });
+    this.socket.on('tweet', data => {
+      this.tweets = [...this.tweets,data];
+    });
+    this.socket.on('suggestions', data => {
+      console.log(data);
+      this.suggestions = [...this.suggestions,data.suggestions];
+      this.totalTweets = data.counter;
+      this.hideLoading();
+    });
   }
 
   d3Init() {
@@ -147,13 +146,12 @@ export class NimbusBbvaContigo extends NimbusRequest {
   async firstUpdated(_changedProperties) {
     super.firstUpdated(_changedProperties);
     this.d3Init();
-    // const countries = await this.request({
-      // endpoint:'countries'
-    // });
-    // this.countries = countries.message === 'COUNTRY_FOUND' ? countries.data : [];
-    // countries.message === 'COUNTRY_FOUND' ? this.setRequestCountry(countries.data[0].code) : '';
-    // this.country = countries.message === 'COUNTRY_FOUND' ? countries.data[0].code : '';
-    this.setRequestCountry('mx');
+    const countries = await this.request({
+      endpoint:'countries'
+    });
+    this.countries = countries.message === 'COUNTRY_FOUND' ? countries.data : [];
+    countries.message === 'COUNTRY_FOUND' ? this.setRequestCountry(countries.data[0].code) : '';
+    this.country = countries.message === 'COUNTRY_FOUND' ? countries.data[0].code : '';
   }
 
   setRequestCountry(code_country){
@@ -166,15 +164,11 @@ export class NimbusBbvaContigo extends NimbusRequest {
   hideLoading(){document.getElementsByClassName('prioridadesContainer')[0].classList.remove('loading');}
 
   updateDashboard(){
-    this.tweens = [];
+    this.tweets = [];
     this.suggestions = [];
     this.totalTweets = '';
-
-    // this.socket.emit('request-suggestion',this.country);
-    console.log('Upadte Dashboard');
-    this.setTweets();
     this.showLoading();
-    this.setSuggestions();
+    this.socket.emit('request-suggestion',this.country);
   }
 
   changeCountry(){
@@ -187,24 +181,6 @@ export class NimbusBbvaContigo extends NimbusRequest {
       /*  ON REFRESH BUTTON */
     console.log("refresh");
     this.updateDashboard();
-  }
-
-  setTweets(){
-    fetch('./25c354bf.json')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(item => {this.tweets = [...this.tweets,item];});
-    });
-  }
-
-  setSuggestions(){
-    fetch('./suggestions.json')
-      .then(response => response.json())
-      .then(data => {
-        this.hideLoading();
-        this.totalTweets = data.counter;
-        this.suggestions = [...this.suggestions, data];
-      });
   }
 
   createRenderRoot() {
@@ -242,7 +218,6 @@ export class NimbusBbvaContigo extends NimbusRequest {
               <div class="twitterGeneralContainer">
                   <div class="totalTweets">
                     <p id="totalTweets">
-                    ${ this.totalTweets }
                     ${ this.totalTweets.length > 0 ? this.totalTweets : '' }
                     </p>
                     <span>Tweets <br>analizados</span>
@@ -275,6 +250,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
                 </div>
                 <div class="blueBox symbolContainer">
                   <div class="symbolsBox">
+                    <p style="margin-top:0;">Simbología</p>
                     <div class="symbolUserContainer">
                       <div class="symbolContainer">
                         <div><svg viewBox="0 0 21.12 21.22" width="30" height="40"><path d="M13.6,10.61a5.7,5.7,0,0,0,2.6-4.84,5.77,5.77,0,1,0-8.84,4.89A10.47,10.47,0,0,0,0,20.34.89.89,0,0,0,.23,21a.81.81,0,0,0,.62.26h19.4a.91.91,0,0,0,.62-.26.93.93,0,0,0,.23-.62A10.56,10.56,0,0,0,13.6,10.61ZM10.45,1.74a4,4,0,1,1-4,4A4,4,0,0,1,10.45,1.74ZM1.82,19.53a8.82,8.82,0,0,1,17.47,0Z" style="fill:#f8cd51"/></svg></div>

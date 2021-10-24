@@ -166,7 +166,7 @@
       .prioridadesContainer .card .cardFooter .negative path{fill:var(--red-color);}
       .prioridadesContainer .card .cardFooter .negative circle{stroke:var(--red-color);}
       .prioridadesContainer .card .cardFooter .userContainer svg path{ fill:var(--yellow-color); }
-      .prioridadesContainer .rombo{box-shadow: 0px 0px 10px var(--navy-blue-color);position: absolute;top:calc(50% - 50px);left:calc(50% - 50px);width:100px;height:100px;text-align: center;background:var(--aqua-color);transform:rotate(45deg);}
+      .prioridadesContainer .rombo{box-shadow: 0px 0px 10px var(--navy-blue-color);position: absolute;top:calc(50% - 50px);left:calc(50% - 50px);width:100px;height:100px;text-align: center;background:var(--aqua-color);transform:rotate(45deg) scale(1);animation: increment 1s ease;}
       .prioridadesContainer .rombo p{transform: rotate(-45deg);margin: 0;padding: 0;transform-origin: 85% 100%;}
       
       @media(max-width:900px){
@@ -188,6 +188,10 @@
         0% {background-position: 0% 50%;}
         50% {	background-position: 100% 50%;	}
         100% {background-position: 0% 50%;}
+      }
+      @keyframes increment {
+        0%{transform: rotate(45deg) scale(0);}
+        100%{transform: rotate(45deg) scale(1);}
       }
   </style>
   <title>nimbus-bbva-contigo</title>
