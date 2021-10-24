@@ -1,5 +1,6 @@
 import { html, css } from 'lit';
 import { NimbusRequest } from './NimbusRequest';
+import './emop-link';
 
 export class NimbusBbvaContigo extends NimbusRequest {
   static get properties() {
@@ -26,7 +27,6 @@ export class NimbusBbvaContigo extends NimbusRequest {
     this.suggestions = [];
     this.totalTweets = '';
 
-    // this.socket = io('http://localhost:5000');
     this.socket = io('https://stream-twitter-hackathon.herokuapp.com');
     this.socket.on("connect", () => {
       console.log("client side socket connection established");
@@ -207,7 +207,9 @@ export class NimbusBbvaContigo extends NimbusRequest {
                     <circle class="circle" cx="11" cy="11" r="10"/>
                     <polygon class="polygon" points="12 8 12 10 14 10 14 12 12 12 12 14 10 14 10 12 8 12 8 10 10 10 10 8 12 8"/>
                   </svg>
-                  <span>Agregar País</span>
+                  <emop-link href="/rules">
+                    <span>Agregar País</span>
+                  </emop-link>
                 </button>
               </div>
           </div>

@@ -47,8 +47,8 @@ class EMOPApp extends router(LitElement){
   render() {
     return html`
       <emop-main active-route=${this.route}>
-        <nimbus-bbva-contigo route='rules'></nimbus-bbva-contigo>
-        <emop-rules route='dashboard'></emop-rules>
+        <nimbus-bbva-contigo route='dashboard'></nimbus-bbva-contigo>
+        <emop-rules route='rules'></emop-rules>
       </emop-main>
     `;
   }

@@ -102,22 +102,22 @@ server.listen(process.env.PORT, () => console.log(`Node server listening on port
 io.on('connection', async (socket) => {
     console.log('connected!');
 
-    const filterLocation = async (tweet, location) => {
-        let filtered = false;
-        const countryDB = require('./db/countries');
-        const locations = (await countryDB.get(location)).locations;
-
-        if (locations.some(_location => tweet.users.reduce((acc, i) => {
-            return acc + i.location;
-        }, '').toLowerCase().includes(_location.toLowerCase()))) {
-            filtered = true;
-        }
-
-        return filtered;
-    };
-
     socket.on('request-suggestion', async (country_code) => {
         console.log(`Requesting suggestion for ${country_code} at ${new Date()}`);
+
+        const filterLocation = async (tweet, location) => {
+          let filtered = false;
+          const countryDB = require('./db/countries');
+          const locations = (await countryDB.get(location)).locations;
+  
+          if (locations.some(_location => tweet.users.reduce((acc, i) => {
+              return acc + i.location;
+          }, '').toLowerCase().includes(_location.toLowerCase()))) {
+              filtered = true;
+          }
+  
+          return filtered;
+        };
 
         const _tweetsBuffer = [];
 

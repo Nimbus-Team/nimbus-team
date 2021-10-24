@@ -173,29 +173,26 @@ class EMOPRules extends NimbusRequest {
     return html`
       <div class="back-zone">
         <emop-link href="/">
-          <vaadin-button @click=${this.showQuickForms} var="category" theme="primary">
-            <iron-icon icon="vaadin:sign-out" slot="prefix"></iron-icon>
-            Return to dashboard
-          </vaadin-button>
+          Return to dashboard
         </emop-link>
       </div>
       <div class="nav-menu">
         <div class="nav-element">
-          <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCountry = e.detail.value; console.log(this.currentCountry)}}></vaadin-combo-box>
+          <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCountry = e.detail.value}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="country" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCategory = e.detail.value; console.log(this.currentCategory)}}></vaadin-combo-box>
+          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCategory = e.detail.value}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="category" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentClient = e.detail.value; console.log(this.currentClient)}}></vaadin-combo-box>
+          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentClient = e.detail.value}}></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="client" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
