@@ -14,13 +14,16 @@ class EMOPRules extends NimbusRequest {
     this.clients = [];
     this.rules = []
     this.newCountry = {}
+    this.newCategory = {}
+    this.newClient = {}
   }
 
   static get properties() {
     return {
       countries: { type: Array },
       clients: { type: Array },
-      categories: { type: Array }
+      categories: { type: Array },
+      rules: { type: Array }
     };
   }
 
@@ -124,8 +127,28 @@ class EMOPRules extends NimbusRequest {
       method: 'POST',
       body: this.newCountry
     }).then(res => {
-      this.countries.push(res.data);
+      this.countries = [...this.countries, res.data];
     });
+  }
+
+  addCategory(e) {
+    this.request({ 
+      endpoint: 'categories',
+      method: 'POST',
+      body: this.newCategory
+    }).then(res => {
+      this.categories = [...this.categories, res.data];
+    });
+  }
+
+  addClient(e) {
+    this.request({
+      endpoint: 'clients',
+      method: 'POST',
+      body: this.newClient
+    }).then(res => {
+      this.clients = [...this.clients, res.data];
+    }); 
   }
 
   render() {
@@ -176,7 +199,7 @@ class EMOPRules extends NimbusRequest {
           </vaadin-button>
         </div>
         <div id="client-form">
-          <vaadin-text-field label="Cliente" @input=${(e) => {this.newCountry.client = e.target.value}}></vaadin-text-field>
+          <vaadin-text-field label="Cliente" @input=${(e) => {this.newClient.name = e.target.value}}></vaadin-text-field>
           <vaadin-button @click=${this.showQuickForms} theme="primary">
             <iron-icon icon="vaadin:paperplane" slot="prefix"></iron-icon>
             Enviar
