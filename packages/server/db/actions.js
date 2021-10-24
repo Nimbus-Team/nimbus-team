@@ -33,7 +33,7 @@ async function update(code, description) {
     try {
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code
-        },{
+        }, {
             $set: {
                 code, description
             }
@@ -58,6 +58,25 @@ async function remove(code) {
 async function getAll() {
     try {
         return await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
+    } catch (e) {
+        return handleError(ACTION_NOT_FOUND, e);
+    }
+}
+
+async function getByRecognize(client, category, location, emotion) {
+    const mongo = new MongoAccess();
+    try {
+        await mongo.connect();
+        const actions = await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
+        return actions.reduce((acc, action) => {
+            if (action.clients.some(_client => _client.code === client) &&
+                action.categories.some(_category => _category.code === category) &&
+                action.locations.some(_location => _location.code === location) &&
+                action.emotions.some(_emotion => _emotion.code === emotion)) {
+                acc = action;
+            }
+            return acc;
+        }, {});
     } catch (e) {
         return handleError(ACTION_NOT_FOUND, e);
     }
@@ -173,4 +192,17 @@ async function removeCategory(code_action, code_category) {
     }
 }
 
-module.exports = {create, getAll, update, remove, get, addLocation, removeLocation, addClient, removeClient, addCategory, removeCategory};
+module.exports = {
+    create,
+    getAll,
+    update,
+    remove,
+    get,
+    getByRecognize,
+    addLocation,
+    removeLocation,
+    addClient,
+    removeClient,
+    addCategory,
+    removeCategory
+};

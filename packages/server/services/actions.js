@@ -7,9 +7,9 @@ const ACTION_UPDATED = 'ACTION_UPDATED';
 const ACTION_DELETED = 'ACTION_DELETED';
 
 const createAction = async (request, response) => {
-    const {code, description, locations, clients, categories} = request.body;
+    const {code, description, locations, clients, categories, emotions} = request.body;
     try {
-        const match = await actionDB.create(code, description, locations, clients, categories);
+        const match = await actionDB.create(code, description, locations, clients, categories, emotions);
         res(match, await actionDB.get(code), ACTION_CREATED, response);
         
     } catch (e) {
