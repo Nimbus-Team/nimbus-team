@@ -9,7 +9,7 @@ export class NimbusRequest extends LitElement{
 
     constructor(){
         super();
-        this.host = 'http://localhost:5000';
+        this.host = 'https://stream-twitter-hackathon.herokuapp.com';
     }
 
     async request(config){

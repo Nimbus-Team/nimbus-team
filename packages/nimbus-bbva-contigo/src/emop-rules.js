@@ -1,16 +1,17 @@
-import { LitElement, html, css } from "lit";
+import { html, css } from "lit";
 import '@vaadin/vaadin-button/vaadin-button';
 import '@vaadin/vaadin-combo-box';
 import '@vaadin/vaadin-icons';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-accordion';
+import { NimbusRequest } from "./NimbusRequest";
 
-class EMOPRules extends LitElement {
+class EMOPRules extends NimbusRequest {
   constructor() {
     super();
-    this.countries = ['Mexico', 'España', 'Colombia'];
-    this.categories = ['Cat1', 'Cat2', 'Cat3'];
-    this.clients = ['Personal', 'Empresarial'];
+    this.countries = []
+    this.categories = [];
+    this.clients = [];
     this.rules = []
   }
 
@@ -82,8 +83,25 @@ class EMOPRules extends LitElement {
     `;
   }
 
-  firstUpdated() {
+  async firstUpdated() {
     this.forms = this.shadowRoot.querySelectorAll('.quick-forms > div');
+    const countries = await this.request({
+      endpoint: 'countries'
+    });;
+    this.countries = countries.data;
+    const categories = await this.request({
+      endpoint: 'categories'
+    });
+    this.categories = categories.data;
+    const clients = await this.request({
+      endpoint: 'clients'
+    });
+    this.clients = clients.data;
+    const rules = await this.request({
+      endpoint: 'rules'
+    })
+    this.rules = rules.data;
+    console.log(this.clients);
   }
 
   showQuickForms(e) {
@@ -103,21 +121,21 @@ class EMOPRules extends LitElement {
     return html`
       <div class="nav-menu">
         <div class="nav-element">
-          <vaadin-combo-box label="Paises" placeholder="Selecciona" value="Mexico" .items=${this.countries}></vaadin-combo-box>
+          <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name"></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="country" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories}></vaadin-combo-box>
+          <vaadin-combo-box label="Categorias" placeholder="Selecciona" value="Value" .items=${this.categories} item-value-path="code" item-label-path="name"></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="category" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
         </vaadin-button>
         </div>
         <div class="nav-element">
-          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients}></vaadin-combo-box>
+          <vaadin-combo-box label="Clientes" placeholder="Selecciona" value="Value" .items=${this.clients} item-value-path="code" item-label-path="name"></vaadin-combo-box>
         <vaadin-button @click=${this.showQuickForms} var="client" theme="primary">
           <iron-icon icon="vaadin:plus" slot="prefix"></iron-icon>
           Add
