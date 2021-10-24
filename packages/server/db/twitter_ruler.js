@@ -15,7 +15,7 @@ async function create(keywords, tag, lang = 'es') {
         return await axios.post('https://api.twitter.com/2/' + ENDPOINT, {
             add: [
                 {
-                    value: `(${keywords.join()}) lang:${lang}`, tag
+                    value: `(${keywords.join(' OR ')}) lang:${lang}`, tag
                 }
             ]
         }, {

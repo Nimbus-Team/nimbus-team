@@ -7,9 +7,10 @@ const COUNTRY_UPDATED = 'COUNTRY_UPDATED';
 const COUNTRY_DELETED = 'COUNTRY_DELETED';
 
 const createCountry = async (request, response) => {
-    const {code, name, lang} = request.body;
+    const {code, name, lang, locations} = request.body;
+    const locationsParsed = locations.replace(/ /g, '').split(',')
     try {
-        const match = await countryDB.create(code, name, lang);
+        const match = await countryDB.create(code, name, lang, locationsParsed);
         res(match, await countryDB.get(code), COUNTRY_CREATED, response);
     } catch (e) {
         response.status(500).json(e);

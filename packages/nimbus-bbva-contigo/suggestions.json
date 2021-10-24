@@ -1,0 +1,400 @@
+{
+  "counter":150,
+  "suggestions":[
+      {
+        "category": "financial_health_person",
+        "suggestion": {
+          "action": "Congelar intereses durante 3 meses",
+          "tweets": [{
+            "tweet": {
+              "author_id": "2597121606",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460635574275",
+              "text": "@qtf @AICM_mx Jajajajaja pinche vieja ridicula"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "2597121606",
+              "name": "ROBERTO ROMA",
+              "username": "ROBERTOROJAN1"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "1151269546977824769",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460589424641",
+              "text": "@HectorTrejo @WiloParada Esta hermosaaaa, justo pense en Bully jajaja https://t.co/nmUSueTnJG"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "1151269546977824769",
+              "location": "Guadalajara, Jalisco",
+              "name": "Eddy Rdz",
+              "username": "IamEddyGarcia"
+            }, {
+              "id": "15889135",
+              "location": "México",
+              "name": "Héctor Trej-o-ween 🎃",
+              "username": "HectorTrejo"
+            }, {
+              "id": "2198819298",
+              "location": "Tuxtla Gutiérrez, Chiapas",
+              "name": "🎃 Spoopy Woli 🎃",
+              "username": "WiloParada"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "904891724828467204",
+              "created_at": "2021-10-24T00:20:36.000Z",
+              "id": "1452067465698099203",
+              "text": "RT @qtf: #AICM ¡un asco! \nQué vergüenza. @AICM_mx Terminal1 \nEsto es lo que piensa la 4T que merecemos 😱😱😱 y el olor es cada vez peor. ESTO…"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "904891724828467204",
+              "name": "Juanita",
+              "username": "Juanitakesito"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }],
+          "report": {
+            "score": -7,
+            "texts": ["jajajajaja", "pinche", "vieja", "ridicula", "esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodTexts": [],
+            "badTexts": ["esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodScore": 0,
+            "badScore": -7,
+            "mean": -2.3333333333333335,
+            "trend": "good",
+            "frequencies": []
+          }
+        }
+      },
+      {
+        "category": "transition_sustainable_future_person",
+        "suggestion": {
+          "action": "Congelar intereses durante 3 meses",
+          "tweets": [{
+            "tweet": {
+              "author_id": "2597121606",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460635574275",
+              "text": "@qtf @AICM_mx Jajajajaja pinche vieja ridicula"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "2597121606",
+              "name": "ROBERTO ROMA",
+              "username": "ROBERTOROJAN1"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "1151269546977824769",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460589424641",
+              "text": "@HectorTrejo @WiloParada Esta hermosaaaa, justo pense en Bully jajaja https://t.co/nmUSueTnJG"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "1151269546977824769",
+              "location": "Guadalajara, Jalisco",
+              "name": "Eddy Rdz",
+              "username": "IamEddyGarcia"
+            }, {
+              "id": "15889135",
+              "location": "México",
+              "name": "Héctor Trej-o-ween 🎃",
+              "username": "HectorTrejo"
+            }, {
+              "id": "2198819298",
+              "location": "Tuxtla Gutiérrez, Chiapas",
+              "name": "🎃 Spoopy Woli 🎃",
+              "username": "WiloParada"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "904891724828467204",
+              "created_at": "2021-10-24T00:20:36.000Z",
+              "id": "1452067465698099203",
+              "text": "RT @qtf: #AICM ¡un asco! \nQué vergüenza. @AICM_mx Terminal1 \nEsto es lo que piensa la 4T que merecemos 😱😱😱 y el olor es cada vez peor. ESTO…"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "904891724828467204",
+              "name": "Juanita",
+              "username": "Juanitakesito"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }],
+          "report": {
+            "score": -7,
+            "texts": ["jajajajaja", "pinche", "vieja", "ridicula", "esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodTexts": ["favorable"],
+            "badTexts": ["esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodScore": 0,
+            "badScore": -7,
+            "mean": -2.3333333333333335,
+            "trend": "bad",
+            "frequencies": []
+          }
+        }
+      },
+      {
+        "category": "grow_clients_person",
+        "suggestion": {
+          "action": "Congelar intereses durante 3 meses",
+          "tweets": [{
+            "tweet": {
+              "author_id": "2597121606",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460635574275",
+              "text": "@qtf @AICM_mx Jajajajaja pinche vieja ridicula"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "2597121606",
+              "name": "ROBERTO ROMA",
+              "username": "ROBERTOROJAN1"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "1151269546977824769",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460589424641",
+              "text": "@HectorTrejo @WiloParada Esta hermosaaaa, justo pense en Bully jajaja https://t.co/nmUSueTnJG"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "1151269546977824769",
+              "location": "Guadalajara, Jalisco",
+              "name": "Eddy Rdz",
+              "username": "IamEddyGarcia"
+            }, {
+              "id": "15889135",
+              "location": "México",
+              "name": "Héctor Trej-o-ween 🎃",
+              "username": "HectorTrejo"
+            }, {
+              "id": "2198819298",
+              "location": "Tuxtla Gutiérrez, Chiapas",
+              "name": "🎃 Spoopy Woli 🎃",
+              "username": "WiloParada"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "904891724828467204",
+              "created_at": "2021-10-24T00:20:36.000Z",
+              "id": "1452067465698099203",
+              "text": "RT @qtf: #AICM ¡un asco! \nQué vergüenza. @AICM_mx Terminal1 \nEsto es lo que piensa la 4T que merecemos 😱😱😱 y el olor es cada vez peor. ESTO…"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "904891724828467204",
+              "name": "Juanita",
+              "username": "Juanitakesito"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }],
+          "report": {
+            "score": -7,
+            "texts": ["jajajajaja", "pinche", "vieja", "ridicula", "esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodTexts": ["reciclar"],
+            "badTexts": ["esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodScore": 0,
+            "badScore": -7,
+            "mean": -2.3333333333333335,
+            "trend": "neutral",
+            "frequencies": []
+          }
+        }
+      },
+      {
+        "category": "excellency_operation_person",
+        "suggestion": {
+          "action": "Congelar intereses durante 3 meses",
+          "tweets": [{
+            "tweet": {
+              "author_id": "2597121606",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460635574275",
+              "text": "@qtf @AICM_mx Jajajajaja pinche vieja ridicula"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "2597121606",
+              "name": "ROBERTO ROMA",
+              "username": "ROBERTOROJAN1"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "1151269546977824769",
+              "created_at": "2021-10-24T00:20:35.000Z",
+              "id": "1452067460589424641",
+              "text": "@HectorTrejo @WiloParada Esta hermosaaaa, justo pense en Bully jajaja https://t.co/nmUSueTnJG"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "1151269546977824769",
+              "location": "Guadalajara, Jalisco",
+              "name": "Eddy Rdz",
+              "username": "IamEddyGarcia"
+            }, {
+              "id": "15889135",
+              "location": "México",
+              "name": "Héctor Trej-o-ween 🎃",
+              "username": "HectorTrejo"
+            }, {
+              "id": "2198819298",
+              "location": "Tuxtla Gutiérrez, Chiapas",
+              "name": "🎃 Spoopy Woli 🎃",
+              "username": "WiloParada"
+            }]
+          }, {
+            "tweet": {
+              "author_id": "904891724828467204",
+              "created_at": "2021-10-24T00:20:36.000Z",
+              "id": "1452067465698099203",
+              "text": "RT @qtf: #AICM ¡un asco! \nQué vergüenza. @AICM_mx Terminal1 \nEsto es lo que piensa la 4T que merecemos 😱😱😱 y el olor es cada vez peor. ESTO…"
+            },
+            "rules": [{
+              "id": "1451635091277504516",
+              "tag": "financial_health_person"
+            }],
+            "users": [{
+              "id": "904891724828467204",
+              "name": "Juanita",
+              "username": "Juanitakesito"
+            }, {
+              "id": "24200281",
+              "location": "México",
+              "name": "Fernanda Familiar",
+              "username": "qtf"
+            }, {
+              "id": "444874873",
+              "location": "Ciudad de México",
+              "name": "@AICM_mx",
+              "username": "AICM_mx"
+            }]
+          }],
+          "report": {
+            "score": -7,
+            "texts": ["jajajajaja", "pinche", "vieja", "ridicula", "esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodTexts": [],
+            "badTexts": ["esta", "hermosaaaa", "justo", "pense", "bully", "jajaja", "https", "t", "co", "nmusuetnjg", "rt", "aicm", "¡un", "asco", "qué", "vergüenza", "esto", "piensa", "merecemos", "😱😱😱", "olor", "cada", "vez", "peor", "esto…"],
+            "goodScore": 0,
+            "badScore": -7,
+            "mean": -2.3333333333333335,
+            "trend": "bad",
+            "frequencies": []
+          }
+        }
+      }
+  ],
+  "country": {
+    "code": "mx",
+    "name": "México"
+  },
+  "action": "Congelar intereses durante 3 meses",
+  "emotions": [],
+  "tweets": 167
+}

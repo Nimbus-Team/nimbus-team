@@ -22,6 +22,8 @@
         --red-color-darker:#B92A45;
         --red-color-ligher:#E77D8E;
 
+        --orange-color:#F7893B;
+
         --yellow-color:#F8CD51;
         --yellow-color-darker:#9C6C01;
         --yellow-color-lighter:#FADE8E;
@@ -40,15 +42,17 @@
         --grey-background-color:#E9E9E9;
       }
       html,body {margin: 0;padding: 0;font-family: Helvetica,Arial, sans-serif;}
-      body{background-color: var(--core-blue-color-darker);color:var(--white-color);padding:20px;}
+      body{background: rgb(4,50,99);background: radial-gradient(circle, rgba(4,50,99,1) 0%, rgba(7,33,70,1) 70%);color:var(--white-color);padding:20px;}
       .container{max-width: 1080px;width: 90%;margin: 20px auto 0 auto;}
-      
+      @media(max-width:900px){
+        body{background: var(--core-blue-color);}
+      }
       .blueBox{background-color: var(--navy-blue-color);padding: 10px 20px;}
       .diagonal{position: relative;border: none;overflow: hidden;background-color:var(--aqua-color-darker);z-index:1;padding: 0px;}
       .diagonal:after {content: "";position: absolute;top: 0;left: 0;width: 500%;height: 1000%;background: var(--aqua-color-lighter);z-index: -1;transform-origin: 0% 0%;transform: translateY(10%) translateX(16%) rotate(-45deg);transition: transform .3s;}
       .diagonal:hover::after {transform: translateY(10%) translateX(-25px) rotate(-45deg);}
 
-
+      .container.header{margin:0 auto;}
       #header{display:grid;grid-template-columns: 2fr 1fr 1fr;align-items: center;justify-content: center;}
       #header h1{font-size:1.25rem;}
       #header .countriesSelect{padding:10px;background-color: transparent;border:0;outline:0;width:100%;color: var(--white-color);}
@@ -59,6 +63,7 @@
       #header .addCountry:hover{cursor:pointer;color:var(--yellow-color);}
       #header .addCountry:hover .circle{fill:var(--yellow-color);}
       @media(max-width:768px){
+
       }
       @media(max-width:640px){
         #header{display:grid;grid-template-columns: 1fr 50px;text-align: center;}
@@ -79,8 +84,24 @@
       #firstRow .d3_globe{width:250px;height:250px;margin:0 auto;}
       #firstRow .d3_globe .water {fill: var(--blue-medium-color-lighter);}
       #firstRow .d3_globe .land {fill: var(--green-color);stroke: #FFF;stroke-width: 0.1px;opacity:0.5;}
-      #firstRow .d3_globe .focused {opacity:1;}
+      #firstRow .d3_globe .focused{opacity:1;}
 
+      #firstRow .symbolContainer{display: grid;align-items: center;}
+      #firstRow .symbolsBox{max-width:130px;margin:0 auto;}
+      #firstRow .symbolUserContainer .symbolContainer{display: grid;grid-template-columns: 50px auto;align-items: center;}
+      #firstRow .symbolUserContainer .symbolContainer p{color:var(--yellow-color);margin:0;padding: 0;}
+      #firstRow .emotionSymbolsContainer {display: grid;grid-gap: 10px;margin: 20px auto 0 auto;}     
+      #firstRow .emotionSymbolsContainer .emotion {display: grid;grid-template-columns: 50px auto;align-items: center;}     
+      #firstRow .emotionSymbolsContainer .emotion p{margin:0;padding: 0;}
+      #firstRow .emotionSymbolsContainer .emotion.positive p{color:var(--blue-medium-color)}
+      #firstRow .emotionSymbolsContainer .emotion circle{fill:none;stroke-miterlimit:10;stroke-width:2px;}
+      #firstRow .emotionSymbolsContainer .emotion.positive path{fill:var(--blue-medium-color);}
+      #firstRow .emotionSymbolsContainer .emotion.positive circle{stroke:var(--blue-medium-color);}
+      #firstRow .emotionSymbolsContainer .emotion.neutral rect{fill:var(--white-color);}
+      #firstRow .emotionSymbolsContainer .emotion.neutral circle{stroke:var(--white-color);}
+      #firstRow .emotionSymbolsContainer .emotion.negative path{fill:var(--red-color);}
+      #firstRow .emotionSymbolsContainer .emotion.negative circle{stroke:var(--red-color);}
+      
       #firstRow .twitterContainer{height:230px;display: grid;grid-template-columns: 1fr 3fr;grid-gap:20px;}
       #firstRow .twitterContainer .twitterGeneralContainer #totalTweets{font-size:1rem;width:50px;height:40px;padding:10px;background-color: var(--aqua-color);color:var(--white-color);font-weight: 800;border:0;outline:0;}
       #firstRow .twitterContainer .twitterGeneralContainer span{font-stretch: expanded;font-size:.8rem;color:var(--white-color);font-weight: 300;}
@@ -91,15 +112,15 @@
       #firstRow .twitterContainer svg{width:35px;height: 35px;}
       #firstRow .tweetsContainer{overflow-y: scroll;overflow-x:hidden;padding-right: 10px;scrollbar-width: thin;scrollbar-color: var(--aqua-color) var(--blue-medium-color-lighter);}
       #firstRow .tweetsContainer::-webkit-scrollbar {width:1em;}
-      #firstRow .tweetsContainer::-webkit-scrollbar-track {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
-      #firstRow .tweetsContainer::-webkit-scrollbar-thumb {box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);}
+      #firstRow .tweetsContainer::-webkit-scrollbar-track {background-color: var(--core-blue-color);}
+      #firstRow .tweetsContainer::-webkit-scrollbar-thumb {background-color: var(--aqua-color);}
+      
       #firstRow .tweet{display: grid;grid-template-columns: 40px auto;background: var(--core-blue-color);padding: 10px;margin: 10px 0;}
       #firstRow .tweet .icon{width: 30px;height: 30px;border-radius: 50px;}
       #firstRow .tweet:nth-child(odd) .icon{background: var(--aqua-color);}
       #firstRow .tweet:nth-child(even) .icon{background: var(--white-color);}
       #firstRow .tweet p.texto{font-size:.9rem;padding: 0;margin:0;color: var(--blue-medium-color-lighter);}
       #firstRow .tweet p.fecha{font-size:.8rem;color:var(--white-color);text-align: right;}
-
       @media(max-width:900px){
         #firstRow{grid-template-columns: 1fr;height: auto;}
       }
@@ -111,36 +132,28 @@
         #firstRow .staticContainer{grid-template-columns: 1fr;}
       }
 
-
-      .prioridadesContainer{display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;position:relative;}
-      .prioridadesContainer .title{color:var(--aqua-color);}
+      .prioridadesContainer{min-height: 50vh;display:grid;grid-template-columns: 1fr 1fr;grid-gap:20px;position:relative;}
+      .prioridadesContainer.loading{display:block;background: linear-gradient(-45deg, var(--orange-color), var(--red-color), var(--blue-medium-color), var(--green-color-lighter));background-size: 400% 400%;animation: gradient 15s ease infinite;}
+      .prioridadesContainer .title{color:var(--white-color);font-stretch: expanded;font-size:.8rem;}
       .prioridadesContainer .card:nth-child(even) .title{text-align: right;}
-
       .prioridadesContainer .card .cardBody{display:grid;grid-template-columns:1fr 1fr;width:70%;margin:30px auto;grid-gap:20px;}
       .prioridadesContainer .card .cardBody .dataContainer{display:grid;}
       .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer{display:grid;grid-template-columns:65px 1fr;align-items: center;margin-bottom:20px;}
-      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer .totalTweets{font-size: .9rem;width: 35px;height: 30px;padding: 10px;border: 1px solid var(--aqua-color);color: var(--aqua-color);font-weight: 800;outline: 0;}
-      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer span{font-stretch: expanded;font-size:.8rem;color:var(--white-color);font-weight: 300;}
-      .prioridadesContainer .card .cardBody .dataContainer p{margin: 0;}
+      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer .totalTweets{font-size: .9rem;width: 35px;height: 30px;border-bottom: 1px solid var(--aqua-color);color: var(--aqua-color);font-weight: 800;outline: 0;}
+      .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer span{font-stretch: expanded;font-size:.8rem;max-width:50px;color:var(--white-color);font-weight: 300;}
+      .prioridadesContainer .card .cardBody .dataContainer p{margin: 0;font-size: .9rem;font-stretch: expanded;}
       .prioridadesContainer .card .cardBody .dataContainer .badWord p{color:var(--red-color);}
       .prioridadesContainer .card .cardBody .dataContainer .goodWord p{color:var(--blue-medium-color);}
-      .prioridadesContainer .card .cardBody .actionContainer{
-        display: grid;
-justify-content: center;
-align-items: center;
-background: var(--core-blue-color);
-text-align: center;
-color: var(--aqua-color);
-border-bottom: 1px solid var(--aqua-color);
-      }
-      .prioridadesContainer .card .cardFooter{display:grid;align-items: center;}
-      .prioridadesContainer .card .cardFooter .userContainer:hover{cursor: pointer;}
+      .prioridadesContainer .card .cardBody .actionContainer{display: grid;justify-content: center;align-items: center;background: var(--navy-blue-color);text-align: center;color: var(--aqua-color);border: 1px solid var(--aqua-color);padding:10px;}
+      
       .prioridadesContainer .card:nth-child(odd) .cardFooter{grid-template-columns: 50px 110px;}
       .prioridadesContainer .card:nth-child(even) .cardFooter{grid-template-columns: 110px 60px;text-align: right;justify-content: end;}
       .prioridadesContainer .card:nth-child(even) .cardFooter div{grid-row-start:1;grid-row-end:2;}
       .prioridadesContainer .card:nth-child(even) .cardFooter .userContainer{grid-column-start:2;grid-column-end:3;}
       .prioridadesContainer .card:nth-child(even) .cardFooter .emotionalContainer{grid-column-start:1;grid-column-end:2;}
 
+      .prioridadesContainer .card .cardFooter{display:grid;align-items: center;}
+      .prioridadesContainer .card .cardFooter .userContainer:hover{cursor: pointer;}
       .prioridadesContainer .card .cardFooter .emotionalContainer{display:grid;grid-template-columns:1fr 1fr 1fr;grid-gap:20px;}
       .prioridadesContainer .card .cardFooter .emotionalContainer .emotion{opacity:.2;}
       .prioridadesContainer .card .cardFooter .emotionalContainer .active{opacity:1;}
@@ -152,29 +165,55 @@ border-bottom: 1px solid var(--aqua-color);
       .prioridadesContainer .card .cardFooter .neutral circle{stroke:var(--white-color);}
       .prioridadesContainer .card .cardFooter .negative path{fill:var(--red-color);}
       .prioridadesContainer .card .cardFooter .negative circle{stroke:var(--red-color);}
-
-    
       .prioridadesContainer .card .cardFooter .userContainer svg path{ fill:var(--yellow-color); }
-
-
-
-
-
-      .prioridadesContainer .rombo{box-shadow: 0px 0px 10px var(--navy-blue-color);position: absolute;top:calc(50% - 50px);left:calc(50% - 50px);width:100px;height:100px;text-align: center;background:var(--aqua-color);transform:rotate(45deg);}
+      .prioridadesContainer .rombo{box-shadow: 0px 0px 10px var(--navy-blue-color);position: absolute;top:calc(50% - 50px);left:calc(50% - 50px);width:100px;height:100px;text-align: center;background:var(--aqua-color);transform:rotate(45deg) scale(1);animation: increment 1s ease;}
       .prioridadesContainer .rombo p{transform: rotate(-45deg);margin: 0;padding: 0;transform-origin: 85% 100%;}
+      
+      @media(max-width:900px){
+        .prioridadesContainer .card .cardBody{width: 100%;}
+      }
+      @media(max-width:690px){
+        .prioridadesContainer{grid-template-columns: 1fr;}
+        .prioridadesContainer .rombo{top: -30px;left: calc(100% - 50px);transform: rotate(45deg) scale(.6);}
+        
+        .prioridadesContainer .card .cardBody .dataContainer .tweetsContainer{width: 50px;}
+        .prioridadesContainer .card:nth-child(2n) .title{text-align: left;}
+        .prioridadesContainer .card:nth-child(2n) .cardFooter{justify-content: start;}
+        .prioridadesContainer .card:nth-child(2n) .cardFooter{grid-template-columns: 60px 110px;text-align: left;}
+        .prioridadesContainer .card:nth-child(2n) .cardFooter .userContainer{grid-column-start: 1;grid-column-end: 2;}
+        .prioridadesContainer .card:nth-child(2n) .cardFooter .emotionalContainer{grid-column-start: 2;grid-column-end: 3;}
+      }
+
+      @keyframes gradient {
+        0% {background-position: 0% 50%;}
+        50% {	background-position: 100% 50%;	}
+        100% {background-position: 0% 50%;}
+      }
+      @keyframes increment {
+        0%{transform: rotate(45deg) scale(0);}
+        100%{transform: rotate(45deg) scale(1);}
+      }
   </style>
   <title>nimbus-bbva-contigo</title>
 </head>
 
 <body>
-
-  <nimbus-bbva-contigo></nimbus-bbva-contigo>
-
+  <script>
+    const _customElementsDefine = window.customElements.define;
+window.customElements.define = (name, cl, conf) => {
+   if (!customElements.get(name)) {
+      _customElementsDefine.call(window.customElements, name, cl, conf);
+   } else {
+      console.warn(`${name} has been defined twice`);
+   }
+};
+  </script>
+  <emop-app></emop-app>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3js.org/queue.v1.min.js"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
-  <script type="module" src="./src/nimbus-bbva-contigo.js"></script>
+  <script type="module" src="src/emop-app.js"></script>
 </body>
 
 </html>
