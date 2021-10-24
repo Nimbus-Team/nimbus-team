@@ -1,4 +1,6 @@
 require('dotenv').config();
+const fs = require('fs');
+
 const express = require('express');
 const cors = require('cors');
 const Twitter = require('twitter-v2');
@@ -14,6 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // Routes
+
+const categoryDB = require('./db/categories');
 
 const countryController = require('./services/countries');
 const clientController = require('./services/clients');
@@ -98,18 +102,12 @@ server.listen(process.env.PORT, () => console.log(`Node server listening on port
 io.on('connection', async (socket) => {
     console.log('connected!');
 
-    const filterLocation = (tweet, location) => {
+    const filterLocation = async (tweet, location) => {
         let filtered = false;
-        const locations = {
-            mx: ['Miguel Hidalgo', 'CDMX', 'Quintana Roo', 'México', 'León, Guanajuato', 'Tijuana', 'Baja california', 'Monterrey', 'mexico', 'df', 'Tlalpan', 'Distrito Federal', 'Ciudad Victoria', 'Ciudad Victoria', 'Puebla', 'Jalisco', 'Mérida', 'Yucatán', 'mx'],
-            ar: ['Buenos Aires', 'Argentina', 'Rosario', 'Quilmes', 'La Calera', 'Santiago del Estero', 'C.A.B.A.', 'Tucumán', 'Hurlingham', 'Córdoba', 'Magdalena'],
-            es: ['Madrid', 'Spain', 'España', 'Barcelona', 'Granada', 'Vejer de la Frontera', 'San Juan de Alicante', 'Logroño', 'Canarias', 'Las Palmas de Gran Canaria', 'Salamanca', 'Murcia', 'Sevilla', 'Andalucía', 'Santander', 'Cáceres'],
-            pe: ['Lima', 'Perú', 'Chilloroya', 'Livitaca'],
-            ve: ['Venezuela', 'Caracas', 'Maracaibo', 'Puerto la Cruz', 'Barquisimeto'],
-            co: ['Bogotá', 'Colombia', 'Cali', 'Medellin', 'Manizales', 'Caldas', 'Barranquilla', 'Titiribí']
-        };
+        const countryDB = require('./db/countries');
+        const locations = (await countryDB.get(location)).locations;
 
-        if (locations[location].some(_location => tweet.users.reduce((acc, i) => {
+        if (locations.some(_location => tweet.users.reduce((acc, i) => {
             return acc + i.location;
         }, '').toLowerCase().includes(_location.toLowerCase()))) {
             filtered = true;
@@ -132,12 +130,7 @@ io.on('connection', async (socket) => {
             ['ve', 'Venezuela']
         ]);
 
-        const categories = [
-            'financial_health_person',
-            'transition_sustainable_future_person',
-            'grow_clients_person',
-            'excellency_operation_person',
-        ];
+        const categories = await categoryDB.getAll();
 
         const actions = new Map([
             ['mx', new Map([
@@ -289,7 +282,7 @@ io.on('connection', async (socket) => {
             const _itemTweet = {
                 tweet, rules, users: includes.users
             };
-            if (filterLocation(_itemTweet, country_code)) {
+            if (await filterLocation(_itemTweet, country_code)) {
                 _tweetsBuffer.push(_itemTweet);
                 socket.emit('tweet', _itemTweet);
             }
@@ -297,7 +290,7 @@ io.on('connection', async (socket) => {
 
         const _suggestions = new Map();
 
-        for (const category of categories) {
+        for (const {code: category} of categories) {
             const tweets = _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category));
             _suggestions.set(category, {
                 action: actions.get(country_code.toLowerCase()).get(category)[1],
@@ -306,12 +299,10 @@ io.on('connection', async (socket) => {
             });
         }
 
-        const fs = require('fs');
-
         fs.writeFileSync(`${country_code}_${new Date().getTime()}_tweets.json`, JSON.stringify(_tweetsBuffer));
 
         socket.emit('suggestions', {
-            suggestions: Array.from(_suggestions, ([category, suggestion]) => ({category, suggestion})),
+            suggestions: Array.from(_suggestions, ([category, suggestion]) => ({category: categoryDB.get(category), suggestion})),
             counter: _tweetsBuffer.length
         });
     });
