@@ -8,9 +8,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
       socket:{ type:Object },
       countries: { type: Array},
       tweets:{type:Array},
-      suggestions:{type:Array},
-      loading:{type:Boolean},
-      loadingText:{type:Array}
+      suggestions:{type:Array}
     };
   }
 
@@ -22,6 +20,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
 
   constructor() {
     super();
+    this.country = '';
     this.countries = [];
     this.tweets = [];
     this.suggestions = [];
@@ -153,30 +152,41 @@ export class NimbusBbvaContigo extends NimbusRequest {
     // });
     // this.countries = countries.message === 'COUNTRY_FOUND' ? countries.data : [];
     // countries.message === 'COUNTRY_FOUND' ? this.setRequestCountry(countries.data[0].code) : '';
+    // this.country = countries.message === 'COUNTRY_FOUND' ? countries.data[0].code : '';
     this.setRequestCountry('mx');
   }
 
   setRequestCountry(code_country){
-    this.tweens = [];
-    this.suggestions = [];
-    this.totalTweets = '';
-    this.d3ChangeCountry(code_country);
-
-    // this.socket.emit('request-suggestion',code_country);
-
-    //TODO
-     this.setTweets();
-     this.showLoading();
-     this.setSuggestions();
+    this.country = code_country;
+    this.d3ChangeCountry(this.country);
+    this.updateDashboard(this.country);
   }
 
   showLoading(){document.getElementsByClassName('prioridadesContainer')[0].classList.add('loading');}
   hideLoading(){document.getElementsByClassName('prioridadesContainer')[0].classList.remove('loading');}
 
+  updateDashboard(){
+    this.tweens = [];
+    this.suggestions = [];
+    this.totalTweets = '';
+
+    // this.socket.emit('request-suggestion',this.country);
+    console.log('Upadte Dashboard');
+    this.setTweets();
+    this.showLoading();
+    this.setSuggestions();
+  }
+
   changeCountry(){
       /*  ON CHANGE SELECT */
       const country = document.getElementById('paises').value;
       this.setRequestCountry(country);
+  }
+
+  refreshCountry(){
+      /*  ON REFRESH BUTTON */
+    console.log("refresh");
+    this.updateDashboard();
   }
 
   setTweets(){
@@ -237,7 +247,7 @@ export class NimbusBbvaContigo extends NimbusRequest {
                     </p>
                     <span>Tweets <br>analizados</span>
                   </div>
-                  <button id="refresh" click=${this.refreshRequest}>
+                  <button id="refresh" @click="${this.refreshCountry}">
                     <svg viewBox="0 0 28.5 26.02" width="25" height="25"><path d="M2.26,11.86l7.89-3.37L6.63,6.78a9.7,9.7,0,0,1,17,4.63l3.11-1.33A13,13,0,0,0,3.52,5.3L0,3.59Z" style="fill:#2dcccd"/><path d="M26.28,13.27l-7.89,3.37L22,18.38a9.69,9.69,0,0,1-17.68-4.6L1.15,15.16A13.09,13.09,0,0,0,14,26a13,13,0,0,0,11-6.15l3.45,1.67Z"/></svg>
                   </button>
               </div>
