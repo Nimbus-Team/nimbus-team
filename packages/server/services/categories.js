@@ -1,3 +1,4 @@
+
 const {categoryDB} = require('../db');
 const {res} = require('../utils');
 
@@ -11,6 +12,7 @@ const createCategory = async (request, response) => {
     try {
         const match = await categoryDB.create(code, name);
         res(match, await categoryDB.get(code), CATEGORY_CREATED, response);
+        ;
     } catch (e) {
         response.status(500).json(e);
     }
@@ -27,6 +29,7 @@ const updateCategory = async (request, response) => {
         }
         const match = await categoryDB.update(code, name);
         res(match, code, CATEGORY_UPDATED, response);
+        ;
     } catch (e) {
         response.status(500).json(e);
     }
@@ -37,6 +40,7 @@ const deleteCategory = async (request, response) => {
     try {
         const match = await categoryDB.remove(code);
         res(match, code, CATEGORY_DELETED, response);
+        ;
     } catch (e) {
         response.status(500).json(e);
     }
@@ -46,6 +50,7 @@ const getCategories = async (request, response) => {
     try {
         const match = await categoryDB.getAll();
         res(match, match, CATEGORY_FOUND, response);
+        ;
     } catch (e) {
         response.status(500).json(e);
     }

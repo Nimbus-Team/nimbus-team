@@ -1,4 +1,4 @@
-const MongoAccess = require('./MongoAccess');
+const { mongoClient  } = require('./MongoAccess');
 const {handleError} = require('../utils.js');
 
 const COLLECTION_CLIENTS = 'clients';
@@ -11,10 +11,10 @@ const CLIENT_NOT_FOUND = 'CLIENT_NOT_FOUND';
 const CLIENT_NOT_UPDATED = 'CLIENT_NOT_UPDATED';
 const CLIENT_NOT_DELETED = 'CLIENT_NOT_DELETED';
 
+var mongo = mongo || new mongoClient();
+
 async function create(code, name) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         return await mongo.client.collection(COLLECTION_CLIENTS).insertOne({
             code, name
         });
@@ -24,9 +24,7 @@ async function create(code, name) {
 }
 
 async function update(code, name) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         await mongo.client.collection(COLLECTION_CLIENTS).findOneAndUpdate({
             code
         },{
@@ -41,9 +39,7 @@ async function update(code, name) {
 }
 
 async function remove(code) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         await mongo.client.collection(COLLECTION_CLIENTS).deleteOne({
             code
         });
@@ -54,9 +50,7 @@ async function remove(code) {
 }
 
 async function getAll() {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         return await mongo.client.collection(COLLECTION_CLIENTS).find({}).toArray();
     } catch (e) {
         return handleError(CLIENT_NOT_FOUND, e);
@@ -64,9 +58,7 @@ async function getAll() {
 }
 
 async function get(code) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         return await mongo.client.collection(COLLECTION_CLIENTS).findOne({code});
     } catch (e) {
         return handleError(CLIENT_NOT_FOUND, e);

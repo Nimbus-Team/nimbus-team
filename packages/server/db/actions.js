@@ -1,4 +1,4 @@
-const MongoAccess = require('./MongoAccess');
+const { mongoClient  } = require('./MongoAccess');
 const {handleError} = require('../utils.js');
 
 const COLLECTION_ACTIONS = 'actions';
@@ -17,10 +17,10 @@ const ACTION_CLIENT_NOT_DELETED = 'ACTION_CLIENT_NOT_DELETED';
 const ACTION_CATEGORY_NOT_ADDED = 'ACTION_CATEGORY_NOT_ADDED';
 const ACTION_CATEGORY_NOT_DELETED = 'ACTION_CATEGORY_NOT_DELETED';
 
+var mongo = mongo || new mongoClient();
+
 async function create(code, description, locations, clients, categories) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         return await mongo.client.collection(COLLECTION_ACTIONS).insertOne({
             code, description, locations, clients, categories
         });
@@ -30,12 +30,10 @@ async function create(code, description, locations, clients, categories) {
 }
 
 async function update(code, description) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code
-        },{
+        }, {
             $set: {
                 code, description
             }
@@ -47,9 +45,7 @@ async function update(code, description) {
 }
 
 async function remove(code) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         await mongo.client.collection(COLLECTION_ACTIONS).deleteOne({
             code
         });
@@ -60,19 +56,34 @@ async function remove(code) {
 }
 
 async function getAll() {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         return await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
     } catch (e) {
         return handleError(ACTION_NOT_FOUND, e);
     }
 }
 
-async function get() {
+async function getByRecognize(client, category, location, emotion) {
     const mongo = new MongoAccess();
     try {
         await mongo.connect();
+        const actions = await mongo.client.collection(COLLECTION_ACTIONS).find({}).toArray();
+        return actions.reduce((acc, action) => {
+            if (action.clients.some(_client => _client.code === client) &&
+                action.categories.some(_category => _category.code === category) &&
+                action.locations.some(_location => _location.code === location) &&
+                action.emotions.some(_emotion => _emotion.code === emotion)) {
+                acc = action;
+            }
+            return acc;
+        }, {});
+    } catch (e) {
+        return handleError(ACTION_NOT_FOUND, e);
+    }
+}
+
+async function get() {
+    try {
         return await mongo.client.collection(COLLECTION_ACTIONS).findOne({});
     } catch (e) {
         return handleError(ACTION_NOT_FOUND, e);
@@ -80,9 +91,7 @@ async function get() {
 }
 
 async function addLocation(code_action, code_location) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const current_action = await mongo.client.collection(COLLECTION_ACTIONS).findOne({code: code_action});
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code: code_action
@@ -100,9 +109,7 @@ async function addLocation(code_action, code_location) {
 }
 
 async function removeLocation(code_action, code_location) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const action = await get(code_action);
         return await mongo.client.collection(COLLECTION_ACTIONS).updateOne({
                 code: code_action
@@ -118,9 +125,7 @@ async function removeLocation(code_action, code_location) {
 }
 
 async function addClient(code_action, code_client) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const current_action = await mongo.client.collection(COLLECTION_ACTIONS).findOne({code: code_action});
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code: code_action
@@ -138,9 +143,7 @@ async function addClient(code_action, code_client) {
 }
 
 async function removeClient(code_action, code_client) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const action = await get(code_action);
         return await mongo.client.collection(COLLECTION_ACTIONS).updateOne({
                 code: code_action
@@ -156,9 +159,7 @@ async function removeClient(code_action, code_client) {
 }
 
 async function addCategory(code_action, code_category) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const current_action = await mongo.client.collection(COLLECTION_ACTIONS).findOne({code: code_action});
         await mongo.client.collection(COLLECTION_ACTIONS).findOneAndUpdate({
             code: code_action
@@ -176,9 +177,7 @@ async function addCategory(code_action, code_category) {
 }
 
 async function removeCategory(code_action, code_category) {
-    const mongo = new MongoAccess();
     try {
-        await mongo.connect();
         const action = await get(code_action);
         return await mongo.client.collection(COLLECTION_ACTIONS).updateOne({
                 code: code_action
@@ -193,4 +192,17 @@ async function removeCategory(code_action, code_category) {
     }
 }
 
-module.exports = {create, getAll, update, remove, get, addLocation, removeLocation, addClient, removeClient, addCategory, removeCategory};
+module.exports = {
+    create,
+    getAll,
+    update,
+    remove,
+    get,
+    getByRecognize,
+    addLocation,
+    removeLocation,
+    addClient,
+    removeClient,
+    addCategory,
+    removeCategory
+};
