@@ -91,7 +91,7 @@ app.use('/rules', twitterRulerRouter);
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "http://localhost:8000",
+        origin: ["http://localhost:8000", "https://stoic-kalam-989d12.netlify.app"],
         methods: ["GET", "POST", "OPTIONS"]
     }
 });
