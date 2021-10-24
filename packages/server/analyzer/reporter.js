@@ -1,6 +1,6 @@
 const getReport = (data, freq) => {
     const tm = require('text-miner');
-    const sentimentAnalyzer = require('./sentiment');
+    const sentimentAnalyzer = require('./Sentiment');
     let sentimentReport = [];
 
     for (const tweetRecorded of data) {

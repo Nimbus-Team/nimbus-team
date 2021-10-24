@@ -4,6 +4,7 @@ import '@vaadin/vaadin-combo-box';
 import '@vaadin/vaadin-icons';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-accordion';
+import './emop-link';
 import { NimbusRequest } from "./NimbusRequest";
 
 class EMOPRules extends NimbusRequest {
@@ -46,7 +47,7 @@ class EMOPRules extends NimbusRequest {
       .crud-form {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: auto auto auto 1fr;
       }
       .nav-menu {
         display: flex;
@@ -108,8 +109,7 @@ class EMOPRules extends NimbusRequest {
     const rules = await this.request({
       endpoint: 'rules'
     })
-    this.rules = rules.data;
-    console.log(this.clients);
+    this.rules = rules.data.data;
   }
 
   showQuickForms(e) {
@@ -171,6 +171,14 @@ class EMOPRules extends NimbusRequest {
 
   render() {
     return html`
+      <div class="back-zone">
+        <emop-link href="/">
+          <vaadin-button @click=${this.showQuickForms} var="category" theme="primary">
+            <iron-icon icon="vaadin:sign-out" slot="prefix"></iron-icon>
+            Return to dashboard
+          </vaadin-button>
+        </emop-link>
+      </div>
       <div class="nav-menu">
         <div class="nav-element">
           <vaadin-combo-box label="Paises" placeholder="Selecciona" .items=${this.countries} item-value-path="code" item-label-path="name" @value-changed=${e => {this.currentCountry = e.detail.value; console.log(this.currentCountry)}}></vaadin-combo-box>
@@ -236,18 +244,14 @@ class EMOPRules extends NimbusRequest {
         <div class="rules-container">
         <h3>Reglas</h3>
         <vaadin-accordion opened="false">
+          ${this.rules.map(rule => html`
           <vaadin-accordion-panel>
-            <div slot="summary">Regla 1</div>
+            <div slot="summary">${rule.id}</div>
             <vaadin-vertical-layout>
-              Contenido de la regla 1
+              ${rule.value}
             </vaadin-vertical-layout>
           </vaadin-accordion-panel>
-          <vaadin-accordion-panel>
-            <div slot="summary">Regla 2</div>
-            <vaadin-vertical-layout>
-              Contenido de la regla 2
-            </vaadin-vertical-layout>
-          </vaadin-accordion-panel>
+          `)}
         </vaadin-accordion>
         </div>
       </div>

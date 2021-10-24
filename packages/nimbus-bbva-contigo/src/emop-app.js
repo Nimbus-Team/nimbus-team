@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { router } from 'lit-element-router';
 import './emop-main';
-import './emop-link';
 import './nimbus-bbva-contigo';
 import './emop-rules';
 
@@ -47,8 +46,6 @@ class EMOPApp extends router(LitElement){
 
   render() {
     return html`
-      <emop-link href="/">Dashboard</emop-link>
-      <emop-link href="/rules">CRUD</emop-link>
       <emop-main active-route=${this.route}>
         <nimbus-bbva-contigo route='rules'></nimbus-bbva-contigo>
         <emop-rules route='dashboard'></emop-rules>
