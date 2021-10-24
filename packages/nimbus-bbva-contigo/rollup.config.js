@@ -5,6 +5,20 @@ import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import { terser } from 'rollup-plugin-terser';
 import { generateSW } from 'rollup-plugin-workbox';
 import path from 'path';
+import copy from 'rollup-plugin-copy';
+
+const copyConfig = {
+  targets: [
+    {
+      src: 'world.json',
+      dest:'dist'
+    },
+    {
+      src: 'world-110m-country-names.tsv',
+      dest: 'dist'
+    }
+  ]
+};
 
 export default {
   input: 'index.html',
@@ -18,6 +32,8 @@ export default {
   preserveEntrySignatures: false,
 
   plugins: [
+    /** Copy static files to dist/ folder */
+    copy(copyConfig),
     /** Enable using HTML as rollup entrypoint */
     html({
       minify: true,
