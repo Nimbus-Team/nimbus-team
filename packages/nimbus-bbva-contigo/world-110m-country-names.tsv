@@ -4,7 +4,7 @@ id	name
 12	Algeria
 24	Angola
 10	Antarctica
-32	Argentina
+ar	Argentina
 51	Armenia
 36	Australia
 40	Austria
@@ -31,7 +31,7 @@ id	name
 148	Chad
 152	Chile
 156	China
-170	Colombia
+co	Colombia
 178	Congo
 180	Congo, the Democratic Republic of the
 188	Costa Rica
@@ -100,7 +100,7 @@ id	name
 458	Malaysia
 466	Mali
 478	Mauritania
-484	Mexico
+mx	Mexico
 498	Moldova, Republic of
 496	Mongolia
 499	Montenegro
@@ -122,7 +122,7 @@ id	name
 591	Panama
 598	Papua New Guinea
 600	Paraguay
-604	Peru
+pe	Peru
 608	Philippines
 616	Poland
 620	Portugal
@@ -141,7 +141,7 @@ id	name
 706	Somalia
 710	South Africa
 728	South Sudan
-724	Spain
+es	Spain
 144	Sri Lanka
 729	Sudan
 740	Suriname
@@ -167,7 +167,7 @@ id	name
 858	Uruguay
 860	Uzbekistan
 548	Vanuatu
-862	Venezuela, Bolivarian Republic of
+ve	Venezuela, Bolivarian Republic of
 704	Viet Nam
 732	Western Sahara
 887	Yemen

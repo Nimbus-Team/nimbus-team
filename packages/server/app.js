@@ -1,21 +1,29 @@
 require('dotenv').config();
+const fs = require('fs');
+
 const express = require('express');
+const cors = require('cors');
 const Twitter = require('twitter-v2');
+const getReport = require('./analyzer/reporter');
 
 const client = new Twitter({
     bearer_token: process.env.TWITTER_BEARER_TOKEN
 });
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // Routes
 
+const categoryDB = require('./db/categories');
+
 const countryController = require('./services/countries');
 const clientController = require('./services/clients');
 const categoryController = require('./services/categories');
 const actionController = require('./services/actions');
+const twitterRuleController = require('./services/twitter_rules');
 
 // Countries
 
@@ -67,6 +75,16 @@ actionRouter.delete('/:code/category', actionController.removeCategory);
 
 app.use('/actions', actionRouter);
 
+// Twitter rules
+
+const twitterRulerRouter = express.Router();
+
+twitterRulerRouter.post('/create', twitterRuleController.createRule);
+twitterRulerRouter.post('/remove', twitterRuleController.deleteRule);
+twitterRulerRouter.get('/', twitterRuleController.getRules);
+
+app.use('/rules', twitterRulerRouter);
+
 // Sockets
 
 const server = require('http').createServer(app);
@@ -84,6 +102,20 @@ server.listen(process.env.PORT, () => console.log(`Node server listening on port
 io.on('connection', async (socket) => {
     console.log('connected!');
 
+    const filterLocation = async (tweet, location) => {
+        let filtered = false;
+        const countryDB = require('./db/countries');
+        const locations = (await countryDB.get(location)).locations;
+
+        if (locations.some(_location => tweet.users.reduce((acc, i) => {
+            return acc + i.location;
+        }, '').toLowerCase().includes(_location.toLowerCase()))) {
+            filtered = true;
+        }
+
+        return filtered;
+    };
+
     socket.on('request-suggestion', async (country_code) => {
         console.log(`Requesting suggestion for ${country_code} at ${new Date()}`);
 
@@ -98,12 +130,7 @@ io.on('connection', async (socket) => {
             ['ve', 'Venezuela']
         ]);
 
-        const categories = [
-            'financial_health_person',
-            'transition_sustainable_future_person',
-            'grow_clients_person',
-            'excellency_operation_person',
-        ];
+        const categories = await categoryDB.getAll();
 
         const actions = new Map([
             ['mx', new Map([
@@ -249,29 +276,35 @@ io.on('connection', async (socket) => {
 
         setTimeout(() => {
             stream.close();
-        }, Number(process.env.STREAM_LISTENING_TIME) || 30000);
+        }, Number(process.env.STREAM_LISTENING_TIME) || 120000);
 
         for await (const {data: tweet, includes, matching_rules: rules} of stream) {
             const _itemTweet = {
                 tweet, rules, users: includes.users
             };
-            _tweetsBuffer.push(_itemTweet);
-            socket.emit('tweet', _itemTweet);
+            if (await filterLocation(_itemTweet, country_code)) {
+                _tweetsBuffer.push(_itemTweet);
+                socket.emit('tweet', _itemTweet);
+            }
         }
-
-        // TODO Analyze data
 
         const _suggestions = new Map();
 
-        for (const category of categories) {
+        for (const {code: category} of categories) {
+            const tweets = _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category));
             _suggestions.set(category, {
                 action: actions.get(country_code.toLowerCase()).get(category)[1],
-                emotions: [],
-                tweets: _tweetsBuffer.filter(item => item.rules.some(rule => rule.tag === category))
+                tweets,
+                report: getReport(tweets, 10)
             });
         }
 
-        socket.emit('suggestions', {suggestions: Array.from(_suggestions, ([category, suggestion]) => ({ category, suggestion })), counter: _tweetsBuffer.length});
+        fs.writeFileSync(`${country_code}_${new Date().getTime()}_tweets.json`, JSON.stringify(_tweetsBuffer));
+
+        socket.emit('suggestions', {
+            suggestions: Array.from(_suggestions, ([category, suggestion]) => ({category: categoryDB.get(category), suggestion})),
+            counter: _tweetsBuffer.length
+        });
     });
 });
 
