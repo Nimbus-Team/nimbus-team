@@ -58,23 +58,14 @@
 
 <body>
   <script>
-    function safeDecorator(fn) {
-      return function(...args) {
-          try {
-            return fn.apply(this, args);
-          } catch (error) {
-            if (
-                error instanceof DOMException &&
-                error.message.includes('has already been used with this registry')
-            ) {
-                return false;
-            }
-            throw error;
-          }
-      };
-    }
-
-    customElements.define = safeDecorator(customElements.define);
+    const _customElementsDefine = window.customElements.define;
+window.customElements.define = (name, cl, conf) => {
+   if (!customElements.get(name)) {
+      _customElementsDefine.call(window.customElements, name, cl, conf);
+   } else {
+      console.warn(`${name} has been defined twice`);
+   }
+};
   </script>
   <emop-app></emop-app>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
