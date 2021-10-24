@@ -58,10 +58,11 @@
       #header .countriesSelect{padding:10px;background-color: transparent;border:0;outline:0;width:100%;color: var(--white-color);}
       #header .countriesSelect:hover{color:var(--navy-blue-color);}
       #header .addCountry{display: grid;grid-template-columns:40px auto;margin: 0 auto;justify-items: center;align-items: center;width:130px;outline:0;border:0;color:var(--blue-medium-color-lighter);background-color: transparent; transition:all 300ms ease-in;}
-      #header .addCountry .circle{fill:var(--blue-medium-color-lighter);transition:all 300ms ease-in;}
-      #header .addCountry .polygon{fill:var(--core-blue-color);transition:all 300ms ease-in;}
+      #header .addCountry span{color:var(--blue-medium-color-lighter);text-decoration: none;}
+      #header .addCountry:hover span{color:var(--yellow-color);}
+      #header .addCountry path{fill:var(--blue-medium-color-lighter);transition:all 300ms ease-in;}
       #header .addCountry:hover{cursor:pointer;color:var(--yellow-color);}
-      #header .addCountry:hover .circle{fill:var(--yellow-color);}
+      #header .addCountry:hover path{fill:var(--yellow-color);}
       @media(max-width:768px){
 
       }
